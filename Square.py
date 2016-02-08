@@ -1,3 +1,8 @@
+#File: Square.py
+#Author: Daniel Melles
+#Date: 2/8/16
+#Square class
+
 from graphics import *
 class Square:
     def __init__(self,color,highlightColor,x,y):
