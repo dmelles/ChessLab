@@ -8,7 +8,7 @@ class Square:
     def __init__(self,color,highlightColor,x,y,length):
         self.piece = 0
         self.length = length
-        self.graphicsSquare = Rectangle(Point(x,y),Point(x+l,y+l))
+        self.graphicsSquare = Rectangle(Point(x,y),Point(x+self.length,y+self.length))
         self.graphicsSquare.setOutline(color)
         self.graphicsSquare.setFill(color)
         self.highlightColor = highlightColor
