@@ -5,9 +5,9 @@
 
 from graphics import *
 class Square:
-    def __init__(self,color,highlightColor,x,y):
+    def __init__(self,color,highlightColor,x,y,length):
         self.piece = 0
-        l = 50
+        self.length = length
         self.graphicsSquare = Rectangle(Point(x,y),Point(x+l,y+l))
         self.graphicsSquare.setOutline(color)
         self.graphicsSquare.setFill(color)
@@ -22,3 +22,5 @@ class Square:
         self.graphicsSquare.setFill(self.highlightColor)
     def unHighlight(self):
         self.graphicsSquare.setFill(self.color)
+    def getLength(self):
+        return self.length
