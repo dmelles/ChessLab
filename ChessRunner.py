@@ -5,5 +5,5 @@
 from ChessGUI import *
 
 def main():
-    pass
+    gui = ChessGUI()
 main()
