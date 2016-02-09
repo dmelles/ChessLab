@@ -36,7 +36,8 @@ class ChessGUI:
 
 		# Creating the interaction options
 
-	#def createBoard(self):
+		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 2), "")
+		self.messageBox.draw(self.window)
 
 		# Create the squared grid
 		self.listOfSquares = [[],[],[],[],[],[],[],[]]
@@ -81,12 +82,33 @@ class ChessGUI:
 			# Use .index to convert letter to number
 			return self.listOfSquares[["a","b","c","d","e","f","g","h","i"].index(requestedSquare[0])][requestedSquare[1] - 1]
 
+	def getClickedSquare(self):
+		"""Returns the the square at the given point, or returns to false"""
+
+		# Set a default return value		
+		returnValue = False
+
+		# Cycle through all squares to find the clicked square
+		for squareList in self.listOfSquares:
+			for square in squareList:
+				if square.clicked(point):
+					returnValue = square
+
+		return returnValue
+
+
 	def getMouse(self):
-		# Gets a mouse 
-		self.window.getMouse()
+		"""Gets a mouse in the window and returns the given point."""
+		mouseClick = self.window.getMouse()
+		return(mouseClick)
+
+	def printMessage(self, Message):
+		"""Prints a message on screen."""
+		self.messageBox.setText(Message)
+
+	
 
 
-#	def highlightSelectedSquare(self, requestedSquare):
+
+	def highlightSelectedSquare(self, requestedSquare):
 		self.getSquare(requestedSquare).highlight()
-
-bob = ChessGUI()
