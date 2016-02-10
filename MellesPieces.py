@@ -12,11 +12,13 @@ class King(Piece):
             y = 7
         else:
             y = 0
+
+        self.image = Image(color+"King")
         super(King,self).__init__(color,x,y)
         
 
     def draw(self,window):
-        pass
+        self.image.draw(window)
 
     def possibleMoves(self,samePieces,enemyPieces):
         possibleMoves = []

@@ -3,17 +3,15 @@
 # Date: 2/5/2016
 # Provides a large piece class for use with Chess.
 
+#Images attribution: http://i.imgur.com/zwF4Lyn.png
 class Piece:
 
-	def __init__(self, chessGUI, color, x, y):
+	def __init__(self)
 
-		# Store the instance variable
-		self.chessGUI = chessGUI
-		self.x = x
-		self.y = y
 
-	def runTurn(self, movesCanMake):
 
-		for move in movesCanMake:
-			self.chessGUI.getSquare(move).highlight()
-		self
+p = window.getMouse
+
+while not quitButton.clicked:
+        for row in squareRows:
+                for square in 
