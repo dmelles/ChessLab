@@ -44,3 +44,6 @@ class Square:
         else:
             return False
 
+    def getCenter(self):
+        return (self.x+self.length/2,self.y+self.length/2)
+
