@@ -16,17 +16,17 @@ class ChessGUI:
 		self.height = 600
 
 		# Create the square colors
-		self.darkSquareColor = "black"
-		self.darkSquareColorHighlighted = "blue"
+		self.darkSquareColor = "azure"
+		self.darkSquareColorHighlighted = "powder blue"
 
-		self.lightSquareColor = "white"
-		self.lightSquareColorHighlighted = "yellow"
+		self.lightSquareColor = "Seashell"
+		self.lightSquareColorHighlighted = "Lavender Bush"
 
 		# Creating the graphics window
 		self.window = GraphWin("Chess!!!", self.width, self.height)
 
 		# Creating the background color
-		self.background = "green"
+		self.background = "Seashell"
 
 		# Filling in the background color
 		self.window.setBackground(self.background)
@@ -73,7 +73,7 @@ class ChessGUI:
 		self.borderLine4.setFill(self.darkSquareColor)
 
 	def getSquare(self, requestedSquare):
-		"""Returns the square requested by the format of either[letter,number] or [number,number]."""
+		"""Returns the square requested by the format of either[letter,number] or [number,number]. Works with Tuples too."""
 
 		# Two branches in case the protocol is changed
 		if(type(requestedSquare[0]) == int):
