@@ -112,3 +112,4 @@ class ChessGUI:
 
 	def highlightSelectedSquare(self, requestedSquare):
 		self.getSquare(requestedSquare).highlight()
+
