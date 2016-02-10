@@ -106,9 +106,9 @@ class ChessGUI:
 		"""Prints a message on screen."""
 		self.messageBox.setText(Message)
 
-	
-
-
+	def draw(objectToBeDrawn):
+		"""Draws and object with proper encapsulation."""
+		objectToBeDrawn.draw(self.window)
 
 	def highlightSelectedSquare(self, requestedSquare):
 		self.getSquare(requestedSquare).highlight()
