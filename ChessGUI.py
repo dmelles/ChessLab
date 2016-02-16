@@ -26,7 +26,7 @@ class ChessGUI:
 		self.window = GraphWin("Chess!!!", self.width, self.height)
 
 		# Creating the background color
-		self.background = "Seashell"
+		self.background = "LemonChiffon"
 
 		# Filling in the background color
 		self.window.setBackground(self.background)
@@ -106,7 +106,7 @@ class ChessGUI:
 		"""Prints a message on screen."""
 		self.messageBox.setText(Message)
 
-	def draw(objectToBeDrawn):
+	def draw(self, objectToBeDrawn):
 		"""Draws and object with proper encapsulation."""
 		objectToBeDrawn.draw(self.window)
 
