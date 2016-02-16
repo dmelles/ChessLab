@@ -13,7 +13,7 @@ class King(Piece):
         else:
             y = 0
 
-        self.image = Image(color+"King")
+        self.imageName = color+"King"
         super(King,self).__init__(color,x,y)
         
 
@@ -24,6 +24,19 @@ class King(Piece):
         possibleMoves = []
         for i in range(-1,2):
             for j in range(-1,2):
-                possibleMoves.append((self.x+i,self.y+j))
+                #Checking if move would go off board or is piece's current position
+                if self.x+i > -1 and self.x+i < 8 and self.y+j > -1 and self.y+j < 8 and not (i==0 and j==0):
+                    possibleMoves.append((self.x+i,self.y+j))
+
+        return possibleMoves
+
+class Pawn(Piece):
+    def __init__(self,color,x):
+        if color == "white":
+            y = 6
+        else:
+            y = 1
+
+        self.image
         
         
