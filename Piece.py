@@ -68,7 +68,3 @@ class Piece:
 
 	def getCoordinates(self):
 		return((self.x,self.y))
-
-p = Piece("black", 7, 7)
-p.ImageName = "fish 0 d False.gif"
-p.draw(bob)
