@@ -69,4 +69,13 @@ class Piece:
 
 
 	def getCoordinates(self):
+		"""Returns the coordinates as a tuple."""
 		return((self.x,self.y))
+
+	def getX(self):
+		"""Returns the x."""
+		return self.x
+
+	def getY(self):
+		"""Returns the y."""
+		return self.y
