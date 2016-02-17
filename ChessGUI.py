@@ -16,17 +16,20 @@ class ChessGUI:
 		self.height = 600
 
 		# Create the square colors
-		self.darkSquareColor = "azure"
-		self.darkSquareColorHighlighted = "powder blue"
+		self.darkSquareColor = "orchid4"
+		self.darkSquareColorHighlighted = "forest green"
 
-		self.lightSquareColor = "Seashell"
-		self.lightSquareColorHighlighted = "Lavender Bush"
+		self.lightSquareColor = "plum1"
+		self.lightSquareColorHighlighted = "pale green"
+
+		# Create the line color
+		self.lineColor ="DarkOrchid4"
 
 		# Creating the graphics window
 		self.window = GraphWin("Chess!!!", self.width, self.height)
 
 		# Creating the background color
-		self.background = "LemonChiffon"
+		self.background = "CadetBlue1"
 
 		# Filling in the background color
 		self.window.setBackground(self.background)
@@ -45,9 +48,9 @@ class ChessGUI:
 		for i in range(8):
 			for j in range(8):
 				if(i % 2 == 0 and j % 2 != 0) or (i % 2 != 0 and j % 2 == 0):
-					self.listOfSquares[i].append(Square(self.darkSquareColor, self.darkSquareColorHighlighted, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
+					self.listOfSquares[i].append(Square(self.darkSquareColor, self.darkSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
 				else:
-					self.listOfSquares[i].append(Square(self.lightSquareColor, self.lightSquareColorHighlighted, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
+					self.listOfSquares[i].append(Square(self.lightSquareColor, self.lightSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
 
 		# Draw the squares
 		for squareList in self.listOfSquares:
@@ -67,10 +70,10 @@ class ChessGUI:
 		self.borderLine4.draw(self.window)
 
 		# Change the color of the border lines
-		self.borderLine1.setFill(self.darkSquareColor)
-		self.borderLine2.setFill(self.darkSquareColor)
-		self.borderLine3.setFill(self.darkSquareColor)
-		self.borderLine4.setFill(self.darkSquareColor)
+		self.borderLine1.setFill(self.lineColor)
+		self.borderLine2.setFill(self.lineColor)
+		self.borderLine3.setFill(self.lineColor)
+		self.borderLine4.setFill(self.lineColor)
 
 	def getSquare(self, requestedSquare):
 		"""Returns the square requested by the format of either[letter,number] or [number,number]. Works with Tuples too."""
