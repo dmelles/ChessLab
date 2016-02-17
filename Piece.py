@@ -10,7 +10,7 @@ from ChessGUI import *
 class Piece:
 
 	def __init__(self, color, x, y):
-
+		"""Creates a piece with a given color string and location."""
 		# Store the instance variable
 		self.x = x
 		self.y = y
@@ -18,23 +18,25 @@ class Piece:
 		self.drawn = False
 		self.living = True
 		# Create the image name, which is blank and to be filled
-		self.ImageName = ""
+		self.imageName = ""
+		# Store the color
+		self.color = color
 
 	def draw(self, chessGUI):
 		"""Draws the piece on the given GUI object."""
 		if(self.drawn == False):
 			# Draw the image if it hasn't already been
 			squareX,squareY = self.getCoordinates()[0],self.getCoordinates()[1]
-			self.Image = Image(chessGUI.getSquare([squareX,squareY]).getCenter(), self.ImageName)
-			chessGUI.draw(self.Image)
+			self.image = Image(chessGUI.getSquare([squareX,squareY]).getCenter(), self.imageName)
+			chessGUI.draw(self.image)
 			self.drawn = True
 
 		# Otherwise, just change the parameters.
 		else:
 			# Move the pieve to the current location
-			dx = 1 * self.getCoordinates[0] - self.Image.getAnchor().getX()
-			dy = 1 * self.getCoordinates[1] - self.Image.getAnchor().getY()
-			self.Image.move(dx,dy)
+			dx = 1 * self.getCoordinates[0] - self.image.getAnchor().getX()
+			dy = 1 * self.getCoordinates[1] - self.image.getAnchor().getY()
+			self.image.move(dx,dy)
 
 	def update(self, listOfTeamPieces, listOfEnemyPieces):
 		"""Updates the piece's knowledge of the board using a team list and enemy list."""
@@ -63,7 +65,7 @@ class Piece:
 		self.living = False
 		# Undraw
 		if(self.drawn):
-			self.Image.undraw()
+			self.image.undraw()
 
 
 	def getCoordinates(self):
