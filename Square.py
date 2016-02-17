@@ -5,12 +5,13 @@
 
 from graphics import *
 class Square:
-    def __init__(self,color,highlightColor,x,y,length):
+    def __init__(self,color,highlightColor,outlineColor,x,y,length):
         self.piece = 0
         self.length = length
         self.graphicsSquare = Rectangle(Point(x,y),Point(x+self.length,y+self.length))
         self.graphicsSquare.setOutline(color)
         self.graphicsSquare.setFill(color)
+        self.graphicsSquare.setOutline(outlineColor)
         self.highlightColor = highlightColor
         self.color = color
         self.x = x
@@ -46,4 +47,5 @@ class Square:
 
     def getCenter(self):
         return Point(self.x+self.length/2,self.y+self.length/2)
+
 
