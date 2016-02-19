@@ -5,6 +5,7 @@
 
 from Square import *
 from graphics import *
+from Button import *
 
 class ChessGUI:
 
@@ -42,8 +43,16 @@ class ChessGUI:
 		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 2), "")
 		self.messageBox.draw(self.window)
 
+		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 60, 40, "Quit", "black")
+		self.resetButton = Button(self.window, Point(self.width * 5 / 6, self.height * 5 / 6), 60, 40, "Quit", "black")
+
+		self.quitButton.activate()
+
 		# Create the squared grid
 		self.listOfSquares = [[],[],[],[],[],[],[],[]]
+		alpha = ["a","b","c","d","e","f","g","h"]
+		numbers = ["1","2","3","4","5","6","7","8"]
+		labelsX,labelsY = [],[]
 
 		for i in range(8):
 			for j in range(8):
@@ -51,11 +60,18 @@ class ChessGUI:
 					self.listOfSquares[i].append(Square(self.darkSquareColor, self.darkSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
 				else:
 					self.listOfSquares[i].append(Square(self.lightSquareColor, self.lightSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
+				labelsY.append(Text(Point(self.width * 1 / 16 + self.boardLength + 15, self.boardLength * j / 8 + self.height * 1/16 + self.boardLength / 16), numbers[7-j]))
+			labelsX.append(Text(Point(self.boardLength * i / 8 + self.width * 1 / 16 + self.boardLength / 16, self.height * 1/16 - 14), alpha[i]))
 
 		# Draw the squares
 		for squareList in self.listOfSquares:
 			for square in squareList:
 				square.draw(self.window)
+
+		# Draw the labels
+		for i in range(8):
+			labelsX[i].draw(self.window)
+			labelsY[i].draw(self.window)
 
 		# Create the border lines
 		self.borderLine1 = Line(Point(self.width * 1 / 16, self.height * 1/16), Point(self.boardLength + self.width * 1 / 16, self.height * 1/16))
@@ -85,8 +101,8 @@ class ChessGUI:
 			# Use .index to convert letter to number
 			return self.listOfSquares[["a","b","c","d","e","f","g","h","i"].index(requestedSquare[0])][requestedSquare[1] - 1]
 
-	def getClickedSquare(self):
-		"""Returns the the square at the given point, or returns to false"""
+	def getClickedSquare(self, point):
+		"""Returns the the square at the given point, or returns false."""
 
 		# Set a default return value		
 		returnValue = False
@@ -98,6 +114,17 @@ class ChessGUI:
 					returnValue = square
 
 		return returnValue
+
+	def getInput(self):
+		"""Validates input, waiting until a square is clicked or the quitButton is quit and returning the selected square or a QuitError."""
+		while True:
+			clickPoint = self.window.getMouse()
+			# Test the point
+			if(self.getClickedSquare(clickPoint)):
+				return self.getClickedSquare(clickPoint)
+				break
+			elif(self.quitButton.clicked(clickPoint)):
+				raise QuitError
 
 
 	def getMouse(self):
@@ -114,5 +141,30 @@ class ChessGUI:
 		objectToBeDrawn.draw(self.window)
 
 	def highlightSelectedSquare(self, requestedSquare):
+		"""Highlights the square at a given coordinate."""
 		self.getSquare(requestedSquare).highlight()
 
+	def unHighlightSelectedSquare(self, requestedSquare):
+		"""Unhighlights the square at a given coordinate."""
+		self.getSquare(requestedSquare).unHighlight()
+
+	def reset(self, resetMessage):
+		"""Resets the GUI window for a new game."""
+		# Wait for the reset button to be clicked
+		self.messageBox.setText(resetMessage)
+		self.resetButton.activate()
+		while True:
+			clickPoint = self.window.getMouse()
+			# Check input
+			if(self.resetButton.clicked(clickPoint)):
+				break
+			elif(self.quitButton.clicked(clickPoint)):
+				raise QuitError
+
+		# Unhighlight all Squares
+		for squareList in listOfSquares:
+			for square in squareList:
+				square.unHighlight()
+
+		# Reset the GUI Message
+		self.messageBox.setText("New game! White goes first.")
