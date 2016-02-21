@@ -1,4 +1,4 @@
-# Bishop.py
+# RamachandranPieces.py
 # Written by: Shasta Ramachandran
 # Date: 2/16/2016
 # Creates all of Shasta's pieces.
