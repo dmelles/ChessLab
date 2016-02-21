@@ -3,14 +3,20 @@
 # Date: 2/16/2016
 # Creates all of Shasta's pieces.
 
-from piece import *
+from Piece import *
 
 class Bishop(Piece):
 	"""Creates a bishop piece."""
 
 	def __init__(self, color, x, y):
 		"""Create a Bishop piece with the given settings"""
-		super(Piece,self).__init__(color, x, y)
+		super(Piece,self).__init__()
+		self.color = color
+		self.x = x
+		self.y = y
+		# Record whether the piece is living and drawn
+		self.drawn = False
+		self.living = True
 		# Set the filename, using self.color
 		self.imageName = self.color + "Bishop.gif"
 
@@ -146,11 +152,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -163,11 +170,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -180,11 +188,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -197,11 +206,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -214,11 +224,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -231,11 +242,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -247,11 +259,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 
@@ -264,11 +277,12 @@ class Knight(Piece):
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
 			# Do nothing
+			pass
 		else:
 			# See if the piece is blocked by any other piece on the same team
 
 			if(gridToTest in self.listOfTeamSquares):
-				break
+				pass
 			else:
 				movesCanMake.append(gridToTest)
 				

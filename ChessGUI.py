@@ -43,8 +43,8 @@ class ChessGUI:
 		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 2), "")
 		self.messageBox.draw(self.window)
 
-		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 60, 40, "Quit", "black")
-		self.resetButton = Button(self.window, Point(self.width * 5 / 6, self.height * 5 / 6), 60, 40, "Quit", "black")
+		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 60, 40, "Quit", "CadetBlue1")
+		self.resetButton = Button(self.window, Point(self.width * 5 / 6, self.height * 5 / 6), 60, 40, "Quit", "CadetBlue1")
 
 		self.quitButton.activate()
 
