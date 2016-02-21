@@ -10,13 +10,7 @@ class Bishop(Piece):
 
 	def __init__(self, color, x, y):
 		"""Create a Bishop piece with the given settings"""
-		super(Piece,self).__init__()
-		self.color = color
-		self.x = x
-		self.y = y
-		# Record whether the piece is living and drawn
-		self.drawn = False
-		self.living = True
+		super(Bishop,self).__init__(color, x, y)
 		# Set the filename, using self.color
 		self.imageName = self.color + "Bishop.gif"
 
@@ -127,7 +121,7 @@ class Knight(Piece):
 
 	def __init__(self, color, x, y):
 		"""Create a Knight piece with the given settings"""
-		super(Piece,self).__init__(color, x, y)
+		super(Knight,self).__init__(color, x, y)
 		# Set the filename, using self.color
 		self.imageName = self.color + "Knight.gif"
 
@@ -293,7 +287,7 @@ class Pawn(Piece):
 
 	def __init__(self, color, x, y):
 		"""Creates a pawn version of a piece."""
-		super(Piece,self).__init__(color, x, y)
+		super(Pawn,self).__init__(color, x, y)
 		self.imageName = self.color + "Pawn.gif"
 		# Create piece specific instance variables
 		self.queen = False
