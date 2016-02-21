@@ -7,7 +7,7 @@ from graphics import *
 
 class King(Piece):
     def __init__(self,color):
-        x = 3
+        x = 4
         if color == "white":
             y = 7
         else:
@@ -18,7 +18,7 @@ class King(Piece):
 
         
 
-    def possibleMoves(self,samePieces,enemyPieces):
+    def movesCanMake(self,samePieces,enemyPieces):
         possibleMoves = []
         for i in range(-1,2):
             for j in range(-1,2):
@@ -34,7 +34,7 @@ class King(Piece):
 
 class Queen(Piece):
     def __init__(self,color):
-        x = 4
+        x = 3
         if color == "white":
             y = 7
         else:
@@ -42,5 +42,87 @@ class Queen(Piece):
 
         self.imageName = color+"Queen.gif"
         super(Queen,self).__init__(color,x,y)
+
+    def movesCanMake(self,samePieces,enemyPieces):
+
+        if self.y <= self.x:
+            upLeftWall = (self.x-self.y,0)
+            downRightWall = (7,self.y+7-self.x)
+        else:
+            upLeftWall = (0,self.y-self.x)
+            downRightWall = (self.x+7-self.y,7)
+
+        if self.y <= 7-self.x:
+            upRightWall = (0,self.y+self.x)
+            downLeftWall = (self.x+self.y,0)
+        else:
+            upRightWall = (7,self.y-(7-self.x))
+            downLeftWall = (self.x-(7-self.y),7)
+        #In order of up/left, up/right,down/right,down/left aka clockwise
+        maxDiagonals = [upLeftWall,upRightWall,downRightWall,downLeftWall]
+        maxAxials = [(self.x,0),(7,self.y),(self.x,7),(0,self.y)]
+        #In order of up, right, down, left
+        
+        for piece in samePieces:
+            if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
+                diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
+                if abs(piece.getX()-self.x) < abs(maxDiagonals[diagonal][0]-self.x):
+                    maxDiagonals[diagonal] = (piece.getX()+xDirection,piece.getY()+yDirection)
+
+            if piece.getX() == self.x:
+                if piece.getY() < self.y:
+                    if abs(self.y-piece.getY()) < abs(self.y-maxAxials[0][1]):
+                        maxAxials[0] = (piece.getX(),piece.getY()+1)
+                else:
+                    if abs(self.y-piece.getY()) < abs(self.y-maxAxials[2][1]):
+                        maxAxials[2] = (piece.getX(),piece.getY()-1)
+                        
+            if piece.getY() == self.y:
+                print(piece.getCoordinates())
+                if piece.getX() < self.x:
+                    if abs(self.x-piece.getX()) > abs(self.x-maxAxials[1][0]):
+                        maxAxials[1] = (piece.getX()+1,piece.getY())
+                else:
+                    if abs(self.x-piece.getX()) < abs(self.x-maxAxials[3][0]):
+                        maxAxials[3] = (piece.getX()-1,piece.getY())                       
+                    
+
+        for piece in enemyPieces:
+            diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
+            if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
+                if abs(piece.getX()-self.x) < maxDiagonals[diagonal][0]:
+                    maxDiagonals[diagonal] = (piece.getX(),piece.getY())
+
+            if piece.getX() == self.x:
+                if piece.getY() < self.y:
+                    if abs(self.y-piece.getY()) < abs(self.y-maxAxials[0][1]):
+                        maxAxials[0] = (piece.getX(),piece.getY()+1)
+                else:
+                    if abs(self.y-piece.getY()) < abs(self.y-maxAxials[2][1]):
+                        maxAxials[2] = (piece.getX(),piece.getY()-1)
+                        
+            if piece.getY() == self.y:
+                print(piece.getCoordinates())
+                if piece.getX() < self.x:
+                    if abs(self.x-piece.getX()) > abs(self.x-maxAxials[1][0]):
+                        maxAxials[1] = (piece.getX(),piece.getY())
+                else:
+                    if abs(self.x-piece.getX()) < abs(self.x-maxAxials[3][0]):
+                        maxAxials[3] = (piece.getX(),piece.getY())
+
+        while 
+    #Returns an index in maxDiagonals^
+    def onWhichDiagonal(self,piece):
+        if piece.getY() < self.y:
+            if piece.getX() < self.x:
+                return 0,-1,-1
+            else:
+                return 1,1,-1
+        else:
+            if piece.getX() > self.x:
+                return 2,-1,1
+            else:
+                return 3,1,1
+                        
 
         
