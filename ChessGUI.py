@@ -125,7 +125,7 @@ class ChessGUI:
 				return(self.getIndex(squareToReturn))
 				break
 			elif(self.quitButton.clicked(clickPoint)):
-				raise QuitError
+				raise NotImplementedError("Quit by user.")
 
 	def getIndex(self, square):
 		"""Gets the X and Y of a given squarem, or returns to False, False for an error."""
@@ -179,7 +179,7 @@ class ChessGUI:
 			if(self.resetButton.clicked(clickPoint)):
 				break
 			elif(self.quitButton.clicked(clickPoint)):
-				raise QuitError
+				raise NotImplementedError("Quit by user.")
 
 		# Unhighlight all Squares
 		for squareList in self.listOfSquares:
