@@ -33,9 +33,10 @@ class Piece:
 
 		# Otherwise, just change the parameters.
 		else:
-			# Move the pieve to the current location
-			dx = 1 * self.getCoordinates[0] - self.image.getAnchor().getX()
-			dy = 1 * self.getCoordinates[1] - self.image.getAnchor().getY()
+			# Move the piece to the current location
+			desiredCenter = chessGUI.getSquare([squareX,squareY]).getCenter()
+			dx = 1 * desiredCenter()[0] - self.image.getAnchor().getX()
+			dy = 1 * desiredCenter()[1] - self.image.getAnchor().getY()
 			self.image.move(dx,dy)
 
 	def update(self, listOfTeamPieces, listOfEnemyPieces):

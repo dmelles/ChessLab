@@ -18,4 +18,26 @@ class Team:
 		else:
 			self.pieces.append(pieces)
 
-	def movesCanMake(self,)
+	def killPiece(self, piece):
+		"""Kills one of the team's pieces."""
+		# Find the piece
+		order = self.pieces.index(piece)
+		# Kill the piece
+		self.pieces[order].kill()
+		# Remove the piece from the list
+		del(self.pieces[order])
+
+	def movesCanMake(self,enemyPieces):
+		"""Returns the moves the team can make."""
+		movesCanMake = []
+		# Loop through pieces
+		for piece in self.pieces:
+			# Generate teamPieces
+			teamPieces = self.pieces
+			order = self.pieces.index(piece)
+			del(teamPieces[order])
+
+			# Run movesCanMake
+			movesCanMake.append(piece.movesCanMake(teamPieces,enemyPieces))
+
+		return movesCanMake
