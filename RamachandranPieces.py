@@ -46,10 +46,10 @@ class Bishop(Piece):
 			movesCanMake.append(gridToTest)
 
 		# Continue in the +- diagonal
+		# Reset grid
+		gridToTest = self.getCoordinates()
+		# Advance the tested square
 		while True:
-			# Reset grid
-			gridToTest = self.getCoordinates()
-			# Advance the tested square
 			gridToTest = (gridToTest[0] + 1,gridToTest[1] - 1)
 
 			# Make sure the piece is not out of bounds
@@ -69,9 +69,10 @@ class Bishop(Piece):
 			movesCanMake.append(gridToTest)
 
 		# Continue in the -+ diagonal
+		# Reset grid
+		gridToTest = self.getCoordinates()
+		# Advance the tested square
 		while True:
-			# Reset grid
-			gridToTest = self.getCoordinates()
 			# Advance the tested square
 			gridToTest = (gridToTest[0] - 1,gridToTest[1] + 1)
 
@@ -91,10 +92,11 @@ class Bishop(Piece):
 			# If the loop is still unbroken, add the current piece
 			movesCanMake.append(gridToTest)
 
-				# Continue in the -- diagonal
+		# Continue in the -- diagonal
+		# Reset grid
+		gridToTest = self.getCoordinates()
+		# Advance the tested square
 		while True:
-			# Reset grid
-			gridToTest = self.getCoordinates()
 			# Advance the tested square
 			gridToTest = (gridToTest[0] - 1,gridToTest[1] - 1)
 
@@ -136,12 +138,12 @@ class Knight(Piece):
 		# Find the grid to test
 		gridToTest = self.getCoordinates()
 
-		# Directions: +3+1,+1+3,+3-1,-1+3,-3+1,+1-3,-1-3,-3-1
+		# Directions: +2+1,+1+2,+2-1,-1+2,-2+1,+1-2,-1-2,-2-1
 
-		# Start by heading in the +3+1 direction
+		# Start by heading in the +2+1 direction
 
 		# Advance the tested square
-		gridToTest = (gridToTest[0] + 3,gridToTest[1] + 1)
+		gridToTest = (gridToTest[0] + 2,gridToTest[1] + 1)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -155,11 +157,11 @@ class Knight(Piece):
 			else:
 				movesCanMake.append(gridToTest)
 
-		# Test +1+3
+		# Test +1+2
 
 		# Advance the tested square
 		gridToTest = self.getCoordinates()
-		gridToTest = (gridToTest[0] + 1,gridToTest[1] + 3)
+		gridToTest = (gridToTest[0] + 1,gridToTest[1] + 2)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -173,11 +175,11 @@ class Knight(Piece):
 			else:
 				movesCanMake.append(gridToTest)
 
-		# Test -1+3
+		# Test -1+2
 
 		# Advance the tested square
 		gridToTest = self.getCoordinates()
-		gridToTest = (gridToTest[0] - 1,gridToTest[1] + 3)
+		gridToTest = (gridToTest[0] - 1,gridToTest[1] + 2)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -191,11 +193,11 @@ class Knight(Piece):
 			else:
 				movesCanMake.append(gridToTest)
 
-		# Test +3-1
+		# Test +2-1
 
 		# Advance the tested square
 		gridToTest = self.getCoordinates()
-		gridToTest = (gridToTest[0] + 3,gridToTest[1] - 1)
+		gridToTest = (gridToTest[0] + 2,gridToTest[1] - 1)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -209,11 +211,11 @@ class Knight(Piece):
 			else:
 				movesCanMake.append(gridToTest)
 
-		# Test -3+1
+		# Test -2+1
 
 		# Advance the tested square
 		gridToTest = self.getCoordinates()
-		gridToTest = (gridToTest[0] - 3,gridToTest[1] + 1)
+		gridToTest = (gridToTest[0] - 2,gridToTest[1] + 1)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -227,11 +229,11 @@ class Knight(Piece):
 			else:
 				movesCanMake.append(gridToTest)
 
-		# Test +1-3
+		# Test +1-2
 
 		# Advance the tested square
 		gridToTest = self.getCoordinates()
-		gridToTest = (gridToTest[0] + 1,gridToTest[1] - 3)
+		gridToTest = (gridToTest[0] + 1,gridToTest[1] - 2)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -245,28 +247,29 @@ class Knight(Piece):
 			else:
 				movesCanMake.append(gridToTest)
 
-		# Test -3-1
-
-		# Advance the tested square
-		gridToTest = (gridToTest[0] - 3,gridToTest[1] - 1)
-
-		# Make sure the piece is not out of bounds
-		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
-			# Do nothing
-			pass
-		else:
-			# See if the piece is blocked by any other piece on the same team
-
-			if(gridToTest in self.listOfTeamSquares):
-				pass
-			else:
-				movesCanMake.append(gridToTest)
-
-		# Test -1-3
+		# Test -2-1
 
 		# Advance the tested square
 		gridToTest = self.getCoordinates()
-		gridToTest = (gridToTest[0] - 1,gridToTest[1] - 3)
+		gridToTest = (gridToTest[0] - 2,gridToTest[1] - 1)
+
+		# Make sure the piece is not out of bounds
+		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
+			# Do nothing
+			pass
+		else:
+			# See if the piece is blocked by any other piece on the same team
+
+			if(gridToTest in self.listOfTeamSquares):
+				pass
+			else:
+				movesCanMake.append(gridToTest)
+
+		# Test -1-2
+
+		# Advance the tested square
+		gridToTest = self.getCoordinates()
+		gridToTest = (gridToTest[0] - 1,gridToTest[1] - 2)
 
 		# Make sure the piece is not out of bounds
 		if(gridToTest[0] > 7 or gridToTest[0] < 0 or gridToTest[1] > 7 or gridToTest[1] < 0):
@@ -307,31 +310,31 @@ class Pawn(Piece):
 		if(self.getCoordinates() == self.originalPoint):
 			# See if the first two spaces are blocked
 			# The piece won't go out of bounds because it is in its original square
-			if(not((self.getCoordinates[0],self.getCoordinates[1] + self.direction) in self.listOfTeamSquares) and not((self.getCoordinates[0],self.getCoordinates[1] + self.direction) in self.listOfEnemySquares)):
-				if(not((self.getCoordinates[0],self.getCoordinates[1] + 2 * self.direction) in self.listOfTeamSquares) and not((self.getCoordinates[0],self.getCoordinates[1] + 2 * self.direction) in self.listOfEnemySquares)):
-					movesCanMake.append((self.getCoordinates[0],self.getCoordinates[1] + 2 * self.direction))
+			if(not((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction) in self.listOfTeamSquares) and not((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction) in self.listOfEnemySquares)):
+				if(not((self.getCoordinates()[0],self.getCoordinates()[1] + 2 * self.direction) in self.listOfTeamSquares) and not((self.getCoordinates()[0],self.getCoordinates()[1] + 2 * self.direction) in self.listOfEnemySquares)):
+					movesCanMake.append((self.getCoordinates()[0],self.getCoordinates()[1] + 2 * self.direction))
 			
 	def movesCanMakeRegular(self, movesCanMake):
 		"""Gives the moves a pawn can make if it is not a queen."""
 		# Check to see if the square in front is occupied, and adds the piece otherwise
-		if(not((self.getCoordinates[0],self.getCoordinates[1] + self.direction) in self.listOfTeamSquares) and not((self.getCoordinates[0],self.getCoordinates[1] + self.direction) in self.listOfEnemySquares)):
+		if(not((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction) in self.listOfTeamSquares) and not((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction) in self.listOfEnemySquares)):
 			# Check if the piece is still in bounds
-			if(0 <= self.getCoordinates[1] + self.direction <= 7):
-				movesCanMake.append((self.getCoordinates[0],self.getCoordinates[1] + self.direction))
+			if(0 <= self.getCoordinates()[1] + self.direction <= 7):
+				movesCanMake.append((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction))
 
 		# Check the diagonals for enemy pieces
-		if(not((self.getCoordinates[0] + 1,self.getCoordinates[1] + self.direction) in self.listOfTeamSquares) and ((self.getCoordinates[0] + 1,self.getCoordinates[1] + self.direction) in self.listOfEnemySquares)):
+		if(not((self.getCoordinates()[0] + 1,self.getCoordinates()[1] + self.direction) in self.listOfTeamSquares) and ((self.getCoordinates()[0] + 1,self.getCoordinates()[1] + self.direction) in self.listOfEnemySquares)):
 			# Check the boundary in both axes
-			if((0 <= self.getCoordinates[1] + self.direction <= 7) and (0 <= self.getCoordinates[0] + 1 <= 7)):
-				movesCanMake.append((self.getCoordinates[0] + 1,self.getCoordinates[1] + self.direction))
+			if((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7)):
+				movesCanMake.append((self.getCoordinates()[0] + 1,self.getCoordinates()[1] + self.direction))
 
 		# Check in both directions
 
-		if(not((self.getCoordinates[0] - 1,self.getCoordinates[1] + self.direction) in self.listOfTeamSquares) and ((self.getCoordinates[0] - 1,self.getCoordinates[1] + self.direction) in self.listOfEnemySquares)):
-			if(0 <= self.getCoordinates[1] + self.direction <= 7):
+		if(not((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction) in self.listOfTeamSquares) and ((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction) in self.listOfEnemySquares)):
+			if(0 <= self.getCoordinates()[1] + self.direction <= 7):
 				# Check the boundary in both axes
-				if((0 <= self.getCoordinates[1] + self.direction <= 7) and (0 <= self.getCoordinates[0] + 1 <= 7)):
-					movesCanMake.append((self.getCoordinates[0] - 1,self.getCoordinates[1] + self.direction))
+				if((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7)):
+					movesCanMake.append((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction))
 
 		# Add the double move the piece can make at the start
 		self.movesCanMakeStart(movesCanMake)
@@ -446,7 +449,7 @@ class Pawn(Piece):
 		while True:
 			self.gridToTest = (self.gridToTest[0] + 1, self.gridToTest[1])
 			# See if the piece is still in bounds
-			if(not((0 <= self.getCoordinates[1] + self.direction <= 7) and (0 <= self.getCoordinates[0] + 1 <= 7))):
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
 
 			# Check for enemy or team pieces
@@ -466,7 +469,7 @@ class Pawn(Piece):
 		while True:
 			self.gridToTest = (self.gridToTest[0] - 1, self.gridToTest[1])
 			# See if the piece is still in bounds
-			if(not((0 <= self.getCoordinates[1] + self.direction <= 7) and (0 <= self.getCoordinates[0] + 1 <= 7))):
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
 
 			# Check for enemy or team pieces
@@ -486,7 +489,7 @@ class Pawn(Piece):
 		while True:
 			self.gridToTest = (self.gridToTest[0], self.gridToTest[1] + 1)
 			# See if the piece is still in bounds
-			if(not((0 <= self.getCoordinates[1] + self.direction <= 7) and (0 <= self.getCoordinates[0] + 1 <= 7))):
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
 
 			# Check for enemy or team pieces
@@ -506,7 +509,7 @@ class Pawn(Piece):
 		while True:
 			self.gridToTest = (self.gridToTest[0], self.gridToTest[1] - 1)
 			# See if the piece is still in bounds
-			if(not((0 <= self.getCoordinates[1] + self.direction <= 7) and (0 <= self.getCoordinates[0] + 1 <= 7))):
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
 
 			# Check for enemy or team pieces

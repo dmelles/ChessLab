@@ -162,6 +162,12 @@ class ChessGUI:
 		"""Unhighlights the square at a given coordinate."""
 		self.getSquare(requestedSquare).unHighlight()
 
+	def unHighlightAllSquares(self):
+		"""Unhighlights all squares."""
+		for squareList in self.listOfSquares:
+			for square in squareList:
+				square.unHighlight()
+
 	def reset(self, resetMessage):
 		"""Resets the GUI window for a new game."""
 		# Wait for the reset button to be clicked
@@ -176,7 +182,7 @@ class ChessGUI:
 				raise QuitError
 
 		# Unhighlight all Squares
-		for squareList in listOfSquares:
+		for squareList in self.listOfSquares:
 			for square in squareList:
 				square.unHighlight()
 
