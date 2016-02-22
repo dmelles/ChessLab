@@ -534,6 +534,7 @@ class Pawn(Piece):
 		# Determine if the pawn is a queen
 		if(self.getCoordinates()[1] == self.queenY):
 			self.queen = True
+			self.imageName = self.color + "Queen.gif"
 
 		# Decide how to move the pawn
 		movesCanMake = []

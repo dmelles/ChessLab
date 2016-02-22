@@ -168,6 +168,10 @@ class ChessGUI:
 			for square in squareList:
 				square.unHighlight()
 
+	def closeWindow(self):
+		"""Closes the window."""
+		self.window.close()
+
 	def reset(self, resetMessage):
 		"""Resets the GUI window for a new game."""
 		# Wait for the reset button to be clicked
