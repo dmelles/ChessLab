@@ -15,6 +15,7 @@ p.draw(bob)
 bish2.draw(bob)
 knight2.draw(bob)
 p2.draw(bob)
+print(type(bish))
 for move in bish.movesCanMake([p,bish2,p2],[knight,knight2]):
     bob.highlightSelectedSquare(move)
 bob.getMouse()

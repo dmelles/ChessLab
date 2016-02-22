@@ -62,7 +62,7 @@ class Piece:
 		self.listOfTeamSquares = listOfTeamSquares
 		self.listOfEnemySquares = listOfEnemySquares
 
-	def killPiece(self):
+	def kill(self):
 		"""Kills a piece."""
 		# Kill piece
 		self.living = False

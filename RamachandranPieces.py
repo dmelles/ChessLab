@@ -103,12 +103,10 @@ class Bishop(Piece):
 			# Make sure the piece is not out of bounds
 			if(gridToTest[0] < 0 or gridToTest[1] < 0):
 				break
-
 			# See if the piece is blocked by any other piece, using a strict test for pieces of the same team and a soft test for enemy pieces
 
 			if(gridToTest in self.listOfTeamSquares):
 				break
-
 			if(gridToTest in self.listOfEnemySquares):
 				movesCanMake.append(gridToTest)
 				break
