@@ -20,10 +20,10 @@ class CheckMateChecker:
 		# Store the list of all coordinates, as a reserve
 		self.coords1 = []
 		for piece in team1:
-			self.coords1.append(piece.getCoordinates)
+			self.coords1.append(piece.getCoordinates())
 		self.coords2 = []
 		for piece in team2:
-			self.coords2.append(piece.getCoordinates)
+			self.coords2.append(piece.getCoordinates())
 
 		# Store the list of all moves that can be made
 		self.moves1 = []
@@ -33,24 +33,60 @@ class CheckMateChecker:
 		for piece in team2:
 			self.moves2 += piece.movesCanMake()
 
+	def pseudoUpdate(self,team1,team2):
+		"""Updates the teams, but keeps the reserve coordinates the same."""
+		# Store the coordinates
+		coords1 = self.coords1
+		coords2 = self.coords2
+
+		# Update
+		self.update(team1,team2)
+
+		# Re-install the coordinates
+		self.coords1 = coords1
+		self.coords2 = coords2
+
+
 	def checkCheckInternal(self):
 		"""Checks the stored instance variables for check."""
-		# Check 
-		if(self.king1 in self)
+		# Check to see if the king is in the moves the enemy can make.
+		return(self.king1.getCoordinates() in self.moves2)
 
-	def testForCheckmate(self,team,enemy):
+	def Checkmate(self, team, enemy):
 		"""Tests the first inputed team for checkmate."""
-		# Store the list of all coordinates
-		self.coords1 = []
-		for piece in team:
-			self.coords1.append(piece.getCoordinates)
-		# Find the set of all moves for team
-		self.movesTeamCanMake = []
+		# Update
+		self.update(team, enemy)
+		checkmate = True
+		# Cycle through all the teams moves and test for check
+		while True: # Loop to allow for a break
+			for piece in team1:
+				for move in piece.movesCanMake():
+					# Move the piece
+					piece.setCoordinates(move)
+					# Update the teams, but not the reserve coordinates
+					team1 = self.team1
+					team2 = self.team2
+					self.pseudoUpdate(team1,team2)
+					# Check for check
+					if(self.checkCheckInternal()):
+						# No change
+						pass
+					else:
+						# Set to false and break
+						checkmate = False
+						break
 
+		# Reset the coordinates
+		for i in range(len(team1)):
+			team1[i].setCoordinates(coords1[i])
+		for i in range(len(team2)):
+			team2[i].setCoordinates(coords1[i])
 
-		for move in piece.movesCanMake(whitePieces,blackPieces):
-                        gui.highlightSelectedSquare(move)
-                    square = gui.getInput()
-                    if square in piece.movesCanMake(whitePieces,blackPieces):
-                        piece.setCoordinates(square)
-                        piece.draw(gui)
+		# Return a true or false
+		return(checkmate)
+
+	def Check(self, team, enemy):
+		"""Tests the first inputed team for check."""
+		# Update the team
+		self.update(team, enemy)
+		return(self.checkCheckInternal())
