@@ -37,8 +37,8 @@ class Piece:
 		else:
 			# Move the piece to the current location
 			desiredCenter = chessGUI.getSquare([squareX,squareY]).getCenter()
-			dx = 1 * desiredCenter()[0] - self.image.getAnchor().getX()
-			dy = 1 * desiredCenter()[1] - self.image.getAnchor().getY()
+			dx = 1 * desiredCenter[0] - self.image.getAnchor().getX()
+			dy = 1 * desiredCenter[1] - self.image.getAnchor().getY()
 			self.image.move(dx,dy)
 
 	def update(self, listOfTeamPieces, listOfEnemyPieces):
