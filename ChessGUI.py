@@ -121,7 +121,8 @@ class ChessGUI:
 			clickPoint = self.window.getMouse()
 			# Test the point
 			if(self.getClickedSquare(clickPoint)):
-				return self.getClickedSquare(clickPoint)
+				squareToReturn = self.getClickedSquare(clickPoint)
+				return(self.getIndex(squareToReturn))
 				break
 			elif(self.quitButton.clicked(clickPoint)):
 				raise QuitError
