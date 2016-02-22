@@ -48,7 +48,7 @@ class Piece:
 		# Same for enemy pieces
 		listOfEnemySquares = []
 
-		for piece in listOfTeamSquares:
+		for piece in listOfEnemyPieces:
 			listOfEnemySquares.append(piece.getCoordinates())
 
 		# Store the parameters as instance variables
