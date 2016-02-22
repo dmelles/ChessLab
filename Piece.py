@@ -24,6 +24,8 @@ class Piece:
 
 	def draw(self, chessGUI):
 		"""Draws the piece on the given GUI object."""
+		# Store coordinates to avoid passing self
+		squareX,squareY = self.getCoordinates()[0],self.getCoordinates()[1]
 		if(self.drawn == False):
 			# Draw the image if it hasn't already been
 			squareX,squareY = self.getCoordinates()[0],self.getCoordinates()[1]
