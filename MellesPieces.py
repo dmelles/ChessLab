@@ -4,6 +4,7 @@
 #Pieces I'm doing
 from Piece import *
 from graphics import *
+import pdb
 
 class King(Piece):
     def __init__(self,color):
@@ -46,7 +47,6 @@ class Queen(Piece):
         self.imageName = color+"Queen.gif"
 
     def movesCanMake(self,samePieces,enemyPieces):
-
         if self.y <= self.x:
             upLeftWall = (self.x-self.y,0)
             downRightWall = (7,self.y+7-self.x)
@@ -68,9 +68,10 @@ class Queen(Piece):
         for piece in samePieces:
             if piece != self:
                 if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
+#                    pdb.set_trace()
                     diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
                     if abs(piece.getX()-self.x) <= abs(maxDiagonals[diagonal][0]-self.x):
-                        maxDiagonals[diagonal] = (piece.getX()+xDirection,piece.getY()+yDirection)
+                        maxDiagonals[diagonal] = (piece.getX()-xDirection,piece.getY()-yDirection)
 
                 if piece.getX() == self.x:
                     if piece.getY() < self.y:
@@ -112,6 +113,7 @@ class Queen(Piece):
                     if abs(self.x-piece.getX()) < abs(self.x-maxAxials[3][0]):
                         maxAxials[3] = (piece.getX(),piece.getY())
 
+        print(maxDiagonals)
         movesCanMake = []
         #Diagonal
         diagonalIndex = 0
@@ -122,7 +124,6 @@ class Queen(Piece):
 
         #On axes
         #Up,right,down,left
-        print(maxAxials)
         axialIndex = 0
         for direction in [(0,-1),(1,0),(0,1),(-1,0)]:
             #If vertical direction
@@ -156,7 +157,7 @@ class Rook(Piece):
         if color == 'white':
             y = 7
         else:
-            y = 8
+            y = 0
         super(Rook,self).__init__(color,x,y)
         self.imageName = color+"Rook.gif"
 

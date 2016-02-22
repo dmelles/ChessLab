@@ -8,29 +8,83 @@ from RamachandranPieces import *
 
 def main():
     gui = ChessGUI()
+    whitePieces,blackPieces = createPieces()
+    for piece in whitePieces+blackPieces:
+        piece.draw(gui)
+
+    currentTeam = 'white'
+
+    while True:
+        if currentTeam == 'white':
+            hasMoved = False
+            while not hasMoved:
+                square = gui.getInput()
+                if pieceOnSquare(whitePieces,square):
+                    piece = pieceOnSquare(whitePieces,square)
+                    for move in piece.movesCanMake(whitePieces,blackPieces):
+                        gui.highlightSelectedSquare(move)
+                    square = gui.getInput()
+                    if square in piece.movesCanMake(whitePieces,blackPieces):
+                        piece.setCoordinates(square)
+                        piece.draw(gui)
+                        hasMoved = True
+                    else:
+                        gui.unHighlightAllSquares()
+                else:
+                   gui.unHighlightAllSquares()
+            currentTeam = 'black'
+        else:
+            hasMoved = False
+            while not hasMoved:
+                square = gui.getInput()
+                if pieceOnSquare(blackPieces,square):
+                    piece = pieceOnSquare(blackPieces,square)
+                    for move in piece.movesCanMake(blackPieces,whitePieces):
+                        gui.highlightSelectedSquare(move)
+                    square = gui.getInput()
+                    if square in piece.movesCanMake(blackPieces,whitePieces):
+                        piece.setCoordinates(square)
+                        piece.draw(gui)
+                        hasMoved = True
+                    else:
+                        gui.unHighlightAllSquares()
+                else:
+                   gui.unHighlightAllSquares()
+            currentTeam = 'white'
+    
+                
+    
+def createPieces():
     whitePieces = []
-    king = King('white')
-    king.draw(gui)
-    whitePieces.append(king)
-    queen = Queen('white')
-    queen.draw(gui)
-    whitePieces.append(queen)
-    rook1 = Rook('white',0)
-    rook2 = Rook('white',7)
-    whitePieces.append(rook1)
-    whitePieces.append(rook2)
-    rook1.draw(gui)
-    rook2.draw(gui)
-##    knight1 = Knight('white',1,7)
-##    knight2 = Knight('white',6,7)
-##    knight1.draw(gui)
-##    knight2.draw(gui)
-    bishop1 = Bishop('white',2,7)
-    bishop2 = Bishop('white',5,7)
-    bishop1.draw(gui)
-    bishop2.draw(gui)
-    for move in rook2.movesCanMake(whitePieces,[]):
-        gui.highlightSelectedSquare(move)
+    whitePieces.append(King('white'))
+    whitePieces.append(Queen('white'))
+    whitePieces.append(Bishop('white',2,7))
+    whitePieces.append(Bishop('white',5,7))
+    whitePieces.append(Knight('white',1,7))
+    whitePieces.append(Knight('white',6,7))
+    whitePieces.append(Rook('white',0))
+    whitePieces.append(Rook('white',7))
+
+    blackPieces = []
+    blackPieces.append(King('black'))
+    blackPieces.append(Queen('black'))
+    blackPieces.append(Bishop('black',2,0))
+    blackPieces.append(Bishop('black',5,0))
+    blackPieces.append(Knight('black',1,0))
+    blackPieces.append(Knight('black',6,0))
+    blackPieces.append(Rook('black',0))
+    blackPieces.append(Rook('black',7))
+
+    for i in range(8):
+        whitePieces.append(Pawn('white',i,6))
+        blackPieces.append(Pawn('black',i,1))
+
+    return whitePieces,blackPieces
     
-    
+def pieceOnSquare(pieces,point):
+    for piece in pieces:
+        if piece.getX() == point[0] and piece.getY() == point[1]:
+            return piece
+    return False
+
 main()
