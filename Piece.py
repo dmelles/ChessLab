@@ -79,3 +79,16 @@ class Piece:
 	def getY(self):
 		"""Returns the y."""
 		return self.y
+
+	def setCoordinates(self,coordinates):
+		"""sets the coordinates as a tuple."""
+		self.x = coordinates[0]
+		self.y = coordinates[1]
+
+	def setX(self, x):
+		"""sets x."""
+		self.x = x
+
+	def setY(self, y):
+		"""sets y."""
+		self.y = y
