@@ -68,7 +68,6 @@ class Queen(Piece):
         for piece in samePieces:
             if piece != self:
                 if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
-#                    pdb.set_trace()
                     diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
                     if abs(piece.getX()-self.x) <= abs(maxDiagonals[diagonal][0]-self.x):
                         maxDiagonals[diagonal] = (piece.getX()-xDirection,piece.getY()-yDirection)
