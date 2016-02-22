@@ -126,6 +126,19 @@ class ChessGUI:
 			elif(self.quitButton.clicked(clickPoint)):
 				raise QuitError
 
+	def getIndex(self, square):
+		"""Gets the X and Y of a given squarem, or returns to False, False for an error."""
+		# Scan all squares to check for a match
+		x = False
+		y = False
+		for i in range(8):
+			for j in range(8):
+				if(self.listOfSquares[i][j] == square):
+					x = i
+					y = j
+		# Format the return
+		tupleToReturn = (x,y)
+		return(tupleToReturn)
 
 	def getMouse(self):
 		"""Gets a mouse in the window and returns the given point."""
