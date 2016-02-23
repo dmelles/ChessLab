@@ -5,7 +5,6 @@
 from ChessGUI import *
 from MellesPieces import *
 from RamachandranPieces import *
-import pdb
 
 class ChessRunner:
 
