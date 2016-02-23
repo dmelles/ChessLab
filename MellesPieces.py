@@ -17,7 +17,7 @@ class King(Piece):
         super(King,self).__init__(color,x,y)
         
         self.imageName = color+"King.gif"
-    
+        self.type = "King"
 
         
 
@@ -51,6 +51,7 @@ class Queen(Piece):
         super(Queen,self).__init__(color,x,y)
 
         self.imageName = color+"Queen.gif"
+        self.type = "Queen"
 
     def movesCanMake(self,samePieces,enemyPieces):
         if self.y <= self.x:
@@ -163,6 +164,7 @@ class Rook(Piece):
             y = 0
         super(Rook,self).__init__(color,x,y)
         self.imageName = color+"Rook.gif"
+        self.type = "Rook"
 
     def movesCanMake(self,samePieces,enemyPieces):
         
