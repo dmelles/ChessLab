@@ -33,6 +33,13 @@ class King(Piece):
             if (piece.getX(),piece.getY()) in possibleMoves:
                 possibleMoves.remove((piece.getX(),piece.getY()))
         return possibleMoves
+    
+    def isInCheck(self,samePieces,enemyPieces):
+        for piece in enemyPieces:
+            print(piece,piece.movesCanMake(samePieces,enemyPieces),piece.getCoordinates())
+            if (self.x,self.y) in piece.movesCanMake(samePieces,enemyPieces):
+                return True
+        return False
 
 
 class Queen(Piece):
@@ -64,7 +71,6 @@ class Queen(Piece):
         maxDiagonals = [upLeftWall,upRightWall,downRightWall,downLeftWall]
         maxAxials = [(self.x,0),(7,self.y),(self.x,7),(0,self.y)]
         #In order of up, right, down, left
-        
         for piece in samePieces:
             if piece != self:
                 if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
@@ -86,25 +92,23 @@ class Queen(Piece):
                             maxAxials[1] = (piece.getX()-1,piece.getY())
                     else:
                         if abs(self.x-piece.getX()) <= abs(self.x-maxAxials[3][0]):
-                            maxAxials[3] = (piece.getX()+1,piece.getY())                       
+                            maxAxials[3] = (piece.getX()+1,piece.getY())                    
                     
-
         for piece in enemyPieces:
             diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
             if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
-                if abs(piece.getX()-self.x) <= maxDiagonals[diagonal][0]:
+                if abs(piece.getX()-self.x) < maxDiagonals[diagonal][0]:
                     maxDiagonals[diagonal] = (piece.getX(),piece.getY())
 
             if piece.getX() == self.x:
                 if piece.getY() < self.y:
                     if abs(self.y-piece.getY()) < abs(self.y-maxAxials[0][1]):
-                        maxAxials[0] = (piece.getX(),piece.getY()+1)
+                        maxAxials[0] = (piece.getX(),piece.getY())
                 else:
                     if abs(self.y-piece.getY()) < abs(self.y-maxAxials[2][1]):
-                        maxAxials[2] = (piece.getX(),piece.getY()-1)
+                        maxAxials[2] = (piece.getX(),piece.getY())
                         
             if piece.getY() == self.y:
-                print(piece.getCoordinates())
                 if piece.getX() > self.x:
                     if abs(self.x-piece.getX()) < abs(self.x-maxAxials[1][0]):
                         maxAxials[1] = (piece.getX(),piece.getY())
@@ -112,13 +116,13 @@ class Queen(Piece):
                     if abs(self.x-piece.getX()) < abs(self.x-maxAxials[3][0]):
                         maxAxials[3] = (piece.getX(),piece.getY())
 
-        print(maxDiagonals)
         movesCanMake = []
         #Diagonal
         diagonalIndex = 0
         for direction in [(-1,-1),(1,-1),(1,1),(-1,1)]:
             for i in range(1,abs(self.x-maxDiagonals[diagonalIndex][0])+1):
-                movesCanMake.append((self.x+i*direction[0],self.y+i*direction[1]))
+                if self.x+i*direction[0] >= 0 and self.y+i*direction[1] >= 0:
+                    movesCanMake.append((self.x+i*direction[0],self.y+i*direction[1]))
             diagonalIndex += 1
 
         #On axes
@@ -128,6 +132,7 @@ class Queen(Piece):
             #If vertical direction
             if axialIndex == 0 or axialIndex == 2:
                 for i in range(1,abs(self.y-maxAxials[axialIndex][1])+1):
+                    
                     movesCanMake.append((self.x,self.y+i*direction[1]))
             #If horizontal direction
             else:
@@ -146,9 +151,9 @@ class Queen(Piece):
                 return 1,1,-1
         else:
             if piece.getX() > self.x:
-                return 2,-1,1
+                return 2,1,1
             else:
-                return 3,1,1
+                return 3,-1,1
 
 class Rook(Piece):
     def __init__(self,color,x):
@@ -188,13 +193,12 @@ class Rook(Piece):
             if piece.getX() == self.x:
                 if piece.getY() < self.y:
                     if abs(self.y-piece.getY()) < abs(self.y-maxAxials[0][1]):
-                        maxAxials[0] = (piece.getX(),piece.getY()+1)
+                        maxAxials[0] = (piece.getX(),piece.getY())
                 else:
                     if abs(self.y-piece.getY()) < abs(self.y-maxAxials[2][1]):
-                        maxAxials[2] = (piece.getX(),piece.getY()-1)
+                        maxAxials[2] = (piece.getX(),piece.getY())
                         
             if piece.getY() == self.y:
-                print(piece.getCoordinates())
                 if piece.getX() > self.x:
                     if abs(self.x-piece.getX()) < abs(self.x-maxAxials[1][0]):
                         maxAxials[1] = (piece.getX(),piece.getY())
@@ -205,7 +209,6 @@ class Rook(Piece):
         movesCanMake = []
         #On axes
         #Up,right,down,left
-        print(maxAxials)
         axialIndex = 0
         for direction in [(0,-1),(1,0),(0,1),(-1,0)]:
             #If vertical direction
