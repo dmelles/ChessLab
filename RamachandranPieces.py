@@ -442,10 +442,10 @@ class Pawn(Piece):
 	def movesCanMakeQueenVertical(self, movesCanMake):
 		"""Gives the moves a pawn can make if it is a queen vertically"""
 
-		self.gridToTest = self.getCoordinates()
+		gridToTest = self.getCoordinates()
 		# Look for pieces in the +x direction
 		while True:
-			self.gridToTest = (self.gridToTest[0] + 1, self.gridToTest[1])
+			gridToTest = (gridToTest[0] + 1, gridToTest[1])
 			# See if the piece is still in bounds
 			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
@@ -463,9 +463,9 @@ class Pawn(Piece):
 
 		# Do the same for the -x direction
 		# Reset Grid
-		self.gridToTest = self.getCoordinates()
+		gridToTest = self.getCoordinates()
 		while True:
-			self.gridToTest = (self.gridToTest[0] - 1, self.gridToTest[1])
+			gridToTest = (gridToTest[0] - 1, gridToTest[1])
 			# See if the piece is still in bounds
 			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
@@ -483,9 +483,9 @@ class Pawn(Piece):
 
 		# +y
 		# Reset Grid
-		self.gridToTest = self.getCoordinates()
+		gridToTest = self.getCoordinates()
 		while True:
-			self.gridToTest = (self.gridToTest[0], self.gridToTest[1] + 1)
+			gridToTest = (gridToTest[0], gridToTest[1] + 1)
 			# See if the piece is still in bounds
 			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
@@ -503,9 +503,9 @@ class Pawn(Piece):
 
 		# -y
 		# Reset Grid
-		self.gridToTest = self.getCoordinates()
+		gridToTest = self.getCoordinates()
 		while True:
-			self.gridToTest = (self.gridToTest[0], self.gridToTest[1] - 1)
+			gridToTest = (gridToTest[0], gridToTest[1] - 1)
 			# See if the piece is still in bounds
 			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
 				break
