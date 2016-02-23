@@ -5,6 +5,7 @@
 from ChessGUI import *
 from MellesPieces import *
 from RamachandranPieces import *
+import pdb
 
 class ChessRunner:
 
@@ -73,14 +74,46 @@ class ChessRunner:
                         teamString = 'White'
                     else:
                         teamString = 'Black'
-                    self.gui.printMessage(teamString+' king is in check.')
+                    if self.isInCheckmate():
+                        self.gui.printMessage(teamString+" is in checkmate")
+                    else:                 
+                        self.gui.printMessage(teamString+' king is in check.')
                 else:
                     self.gui.printMessage("")
             if self.currentTeam == self.whitePieces:
                 self.currentTeam = self.blackPieces
             else:
                 self.currentTeam = self.whitePieces
+
+    def isInCheckmate(self):
+        king = self.otherTeam[0]
+        pieceToRemove = False
+
+        #This method is not efficient but it is thorough
+        for piece in self.otherTeam:
+            for move in piece.movesCanMake(self.otherTeam,self.currentTeam):
+                previousCoordinates = piece.getCoordinates()
+                piece.setCoordinates(move)
+                
+                #Simulating if move would take piece
+                for currentTeamPiece in self.currentTeam:
+                    if piece.getCoordinates() == currentTeamPiece.getCoordinates():
+                        pieceToRemove = currentTeamPiece
+                if pieceToRemove:
+                    currentTeamClone = []
+                    for currentTeamPiece in self.currentTeam:
+                        if currentTeamPiece != pieceToRemove:
+                            currentTeamClone.append(currentTeamPiece)
+                else:
+                    currentTeamClone = self.currentTeam
+
+                if not king.isInCheck(self.otherTeam,currentTeamClone):
+                    pdb.set_trace()
+                    return False
+                piece.setCoordinates(previousCoordinates)
+        return True
                     
+                
         
     def createPieces(self):
         self.whitePieces = []
