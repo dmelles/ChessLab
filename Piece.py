@@ -21,6 +21,8 @@ class Piece:
 		self.imageName = ""
 		# Store the color
 		self.color = color
+		# Store the type
+		self.type = ""
 
 	def draw(self, chessGUI):
 		"""Draws the piece on the given GUI object."""
@@ -95,3 +97,7 @@ class Piece:
 	def setY(self, y):
 		"""sets y."""
 		self.y = y
+
+	def type(self):
+		"""Returns the type of the piece."""
+		return self.type

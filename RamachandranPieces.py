@@ -13,6 +13,7 @@ class Bishop(Piece):
 		super(Bishop,self).__init__(color, x, y)
 		# Set the filename, using self.color
 		self.imageName = self.color + "Bishop.gif"
+		self.type = "Bishop"
 
 	def movesCanMake(self, teamPieces, enemyPieces):
 		"""Gives the moves the bishop can make for a given board configuration."""
@@ -124,6 +125,7 @@ class Knight(Piece):
 		super(Knight,self).__init__(color, x, y)
 		# Set the filename, using self.color
 		self.imageName = self.color + "Knight.gif"
+		self.type = "Knight"
 
 	def movesCanMake(self, teamPieces, enemyPieces):
 		"""Gives the moves the knight can make for a given board configuration."""
@@ -290,6 +292,7 @@ class Pawn(Piece):
 		"""Creates a pawn version of a piece."""
 		super(Pawn,self).__init__(color, x, y)
 		self.imageName = self.color + "Pawn.gif"
+		self.type = "Pawn"
 		# Create piece specific instance variables
 		self.queen = False
 		self.originalPoint = self.getCoordinates()
