@@ -39,11 +39,11 @@ class ChessRunner:
                         previousCoords = piece.getCoordinates()
                         piece.setCoordinates(square)
                         hasMoved = True
-##                        king = self.currentTeam[0]
-##                        if king.isInCheck(self.currentTeam,self.otherTeam):
-##                            piece.setCoordinates(previousCoords)
-##                            hasMoved = False
-##                            self.gui.printMessage("You cannot put yourself in check")
+                        king = self.currentTeam[0]
+                        if king.isInCheck(self.currentTeam,self.otherTeam):
+                            piece.setCoordinates(previousCoords)
+                            hasMoved = False
+                            self.gui.printMessage("You cannot put yourself in check")
                         piece.draw(self.gui)
                         self.gui.unHighlightAllSquares()
                         pieceToRemove = False

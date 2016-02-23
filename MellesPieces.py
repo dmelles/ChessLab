@@ -36,8 +36,7 @@ class King(Piece):
     
     def isInCheck(self,samePieces,enemyPieces):
         for piece in enemyPieces:
-            print(piece,piece.movesCanMake(samePieces,enemyPieces),piece.getCoordinates())
-            if (self.x,self.y) in piece.movesCanMake(samePieces,enemyPieces):
+            if (self.x,self.y) in piece.movesCanMake(enemyPieces,samePieces):
                 return True
         return False
 
