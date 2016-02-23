@@ -5,6 +5,7 @@
 from ChessGUI import *
 from MellesPieces import *
 from RamachandranPieces import *
+import pdb
 
 class ChessRunner:
 
@@ -40,24 +41,33 @@ class ChessRunner:
                         piece.setCoordinates(square)
                         hasMoved = True
                         king = self.currentTeam[0]
-                        if king.isInCheck(self.currentTeam,self.otherTeam):
+                        pieceToRemove = False
+                        
+                        for otherPiece in self.otherTeam:
+                            if piece.getCoordinates() == otherPiece.getCoordinates():
+                                pieceToRemove = otherPiece
+                        if pieceToRemove:
+                            otherTeamClone = []
+                            for otherPiece in self.otherTeam:
+                                if otherPiece != pieceToRemove:
+                                    otherTeamClone.append(otherPiece)
+                        else:
+                            otherTeamClone = self.otherTeam
+                        if king.isInCheck(self.currentTeam,otherTeamClone):
                             piece.setCoordinates(previousCoords)
                             hasMoved = False
                             self.gui.printMessage("You cannot put yourself in check")
                         piece.draw(self.gui)
                         self.gui.unHighlightAllSquares()
-                        pieceToRemove = False
-                        for otherPiece in self.otherTeam:
-                            if piece.getCoordinates() == otherPiece.getCoordinates():
-                                pieceToRemove = otherPiece
-                                break
-                        if pieceToRemove:
+                        
+                        if pieceToRemove and hasMoved:
                             self.otherTeam.remove(pieceToRemove)
                             pieceToRemove.kill()
                     else:
                         self.gui.unHighlightAllSquares()
                 else:
                     self.gui.unHighlightAllSquares()
+                self.gui.printMessage("")
                 king = self.otherTeam[0]
                 if king.isInCheck(self.otherTeam,self.currentTeam):
                     if self.otherTeam == self.whitePieces:
@@ -65,6 +75,8 @@ class ChessRunner:
                     else:
                         teamString = 'Black'
                     self.gui.printMessage(teamString+' king is in check.')
+                else:
+                    self.gui.printMessage("")
             if self.currentTeam == self.whitePieces:
                 self.currentTeam = self.blackPieces
             else:
