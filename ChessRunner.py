@@ -18,7 +18,7 @@ class ChessRunner:
         self.gui = ChessGUI()
         self.createPieces()
         for piece in self.whitePieces+self.blackPieces:
-            piece.draw(self.gui)
+            piece.drawPiece(self.gui)
 
         self.currentTeam = self.whitePieces
 
@@ -87,14 +87,13 @@ class ChessRunner:
 
     def isInCheckmate(self):
         king = self.otherTeam[0]
-        pieceToRemove = False
 
         #This method is not efficient but it is thorough
         for piece in self.otherTeam:
             for move in piece.movesCanMake(self.otherTeam,self.currentTeam):
                 previousCoordinates = piece.getCoordinates()
                 piece.setCoordinates(move)
-                
+                pieceToRemove = False
                 #Simulating if move would take piece
                 for currentTeamPiece in self.currentTeam:
                     if piece.getCoordinates() == currentTeamPiece.getCoordinates():
@@ -106,9 +105,7 @@ class ChessRunner:
                             currentTeamClone.append(currentTeamPiece)
                 else:
                     currentTeamClone = self.currentTeam
-
                 if not king.isInCheck(self.otherTeam,currentTeamClone):
-                    pdb.set_trace()
                     return False
                 piece.setCoordinates(previousCoordinates)
         return True
