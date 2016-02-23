@@ -23,8 +23,9 @@ class Piece:
 		self.color = color
 		# Store the type
 		self.type = ""
+		self.hasMoved = False
 
-	def draw(self, chessGUI):
+	def drawPiece(self, chessGUI):
 		"""Draws the piece on the given GUI object."""
 		# Store coordinates to avoid passing self
 		squareX,squareY = self.getCoordinates()[0],self.getCoordinates()[1]
@@ -86,7 +87,7 @@ class Piece:
 		return self.y
 
 	def setCoordinates(self,coordinates):
-		"""sets the coordinates as a tuple."""
+		"""Sets the coordinates as a tuple."""
 		self.x = coordinates[0]
 		self.y = coordinates[1]
 
@@ -101,3 +102,17 @@ class Piece:
 	def type(self):
 		"""Returns the type of the piece."""
 		return self.type
+
+	def move(self, coordinates):
+		"""Moves a piece by setting self.hasMoved and changing the coordinates."""
+		self.hasMoved = True
+		self.setCoordinates(coordinates)
+
+	def draw(self, gui):
+		"""Confirms that a piece has moved and draws it in the GUI."""
+		self.hasMoved = True
+		self.draw(gui)
+
+	def create(gui):
+		"""First draws the piece on the GUI."""
+		self.draw(gui)
