@@ -150,7 +150,7 @@ class ChessGUI:
 		"""Prints a message on screen."""
 		# Make sure the message ends in a period
 		if(Message[-1] != "." or Message[-1] != "!"):
-			message += "."
+			Message += "."
 		self.messageBox.setText(Message)
 
 	def draw(self, objectToBeDrawn):
