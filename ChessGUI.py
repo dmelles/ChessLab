@@ -17,20 +17,20 @@ class ChessGUI:
 		self.height = 600
 
 		# Create the square colors
-		self.darkSquareColor = "orchid4"
-		self.darkSquareColorHighlighted = "forest green"
+		self.darkSquareColor = "deep pink"
+		self.darkSquareColorHighlighted = "RoyalBlue1"
 
-		self.lightSquareColor = "plum1"
-		self.lightSquareColorHighlighted = "pale green"
+		self.lightSquareColor = "hot pink"
+		self.lightSquareColorHighlighted = "DarkSlateGray1"
 
 		# Create the line color
-		self.lineColor ="DarkOrchid4"
+		self.lineColor = "lavender"
 
 		# Creating the graphics window
 		self.window = GraphWin("Chess!!!", self.width, self.height)
 
 		# Creating the background color
-		self.background = "CadetBlue1"
+		self.background = "thistle3"
 
 		# Filling in the background color
 		self.window.setBackground(self.background)
