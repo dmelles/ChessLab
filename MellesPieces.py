@@ -70,12 +70,14 @@ class Queen(Piece):
         #In order of up/left, up/right,down/right,down/left aka clockwise
         maxDiagonals = [upLeftWall,upRightWall,downRightWall,downLeftWall]
         maxAxials = [(self.x,0),(7,self.y),(self.x,7),(0,self.y)]
+        blockingPieces = [False,False,False,False]
         #In order of up, right, down, left
         for piece in samePieces:
             if piece != self:
                 if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
                     diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
                     if abs(piece.getX()-self.x) <= abs(maxDiagonals[diagonal][0]-self.x):
+                        blockingPieces[diagonal] = piece
                         maxDiagonals[diagonal] = (piece.getX()-xDirection,piece.getY()-yDirection)
 
                 if piece.getX() == self.x:
@@ -98,6 +100,7 @@ class Queen(Piece):
             diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
             if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
                 if abs(piece.getX()-self.x) < maxDiagonals[diagonal][0]:
+                    blockingPieces[diagonal] = piece
                     maxDiagonals[diagonal] = (piece.getX(),piece.getY())
 
             if piece.getX() == self.x:

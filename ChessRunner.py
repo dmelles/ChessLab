@@ -46,6 +46,7 @@ class ChessRunner:
                         for otherPiece in self.otherTeam:
                             if piece.getCoordinates() == otherPiece.getCoordinates():
                                 pieceToRemove = otherPiece
+                        
                         if pieceToRemove:
                             otherTeamClone = []
                             for otherPiece in self.otherTeam:
@@ -53,6 +54,7 @@ class ChessRunner:
                                     otherTeamClone.append(otherPiece)
                         else:
                             otherTeamClone = self.otherTeam
+                        
                         if king.isInCheck(self.currentTeam,otherTeamClone):
                             piece.setCoordinates(previousCoords)
                             hasMoved = False
@@ -74,10 +76,10 @@ class ChessRunner:
                         teamString = 'White'
                     else:
                         teamString = 'Black'
-                    if self.isInCheckmate():
+                    if self.otherTeamIsInCheckmate():
                         self.gui.printMessage(teamString+" is in checkmate")
                     else:                 
-                        self.gui.printMessage(teamString+' king is in check.')
+                       self.gui.printMessage(teamString+' king is in check.')
                 else:
                     self.gui.printMessage("")
             if self.currentTeam == self.whitePieces:
@@ -85,9 +87,8 @@ class ChessRunner:
             else:
                 self.currentTeam = self.whitePieces
 
-    def isInCheckmate(self):
+    def otherTeamIsInCheckmate(self):
         king = self.otherTeam[0]
-
         #This method is not efficient but it is thorough
         for piece in self.otherTeam:
             for move in piece.movesCanMake(self.otherTeam,self.currentTeam):
@@ -106,11 +107,10 @@ class ChessRunner:
                 else:
                     currentTeamClone = self.currentTeam
                 if not king.isInCheck(self.otherTeam,currentTeamClone):
+                    piece.setCoordinates(previousCoordinates)
                     return False
                 piece.setCoordinates(previousCoordinates)
         return True
-                    
-                
         
     def createPieces(self):
         self.whitePieces = []
