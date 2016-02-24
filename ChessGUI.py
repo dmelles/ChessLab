@@ -148,6 +148,9 @@ class ChessGUI:
 
 	def printMessage(self, Message):
 		"""Prints a message on screen."""
+		# Make sure the message ends in a period
+		if(Message[-1] != "." or Message[-1] != "!"):
+			message += "."
 		self.messageBox.setText(Message)
 
 	def draw(self, objectToBeDrawn):
@@ -167,6 +170,10 @@ class ChessGUI:
 		for squareList in self.listOfSquares:
 			for square in squareList:
 				square.unHighlight()
+
+	def clearMessage(self):
+		"""Clears the message being displayed."""
+		self.messageBox.setText("")
 
 	def closeWindow(self):
 		"""Closes the window."""

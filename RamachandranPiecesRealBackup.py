@@ -317,7 +317,7 @@ class Pawn(Piece):
 			
 	def movesCanMakeRegular(self, movesCanMake):
 		"""Gives the moves a pawn can make if it is not a queen."""
-		# Check to see if the square in front is occupied, and adds the square otherwise
+		# Check to see if the square in front is occupied, and adds the piece otherwise
 		if(not((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction) in self.listOfTeamSquares) and not((self.getCoordinates()[0],self.getCoordinates()[1] + self.direction) in self.listOfEnemySquares)):
 			# Check if the piece is still in bounds
 			if(0 <= self.getCoordinates()[1] + self.direction <= 7):
@@ -332,18 +332,220 @@ class Pawn(Piece):
 		# Check in both directions
 
 		if(not((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction) in self.listOfTeamSquares) and ((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction) in self.listOfEnemySquares)):
-			# Check the boundary in both axes
-			if((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] - 1 <= 7)):
-				movesCanMake.append((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction))
+			if(0 <= self.getCoordinates()[1] + self.direction <= 7):
+				# Check the boundary in both axes
+				if((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7)):
+					movesCanMake.append((self.getCoordinates()[0] - 1,self.getCoordinates()[1] + self.direction))
 
 		# Add the double move the piece can make at the start
 		self.movesCanMakeStart(movesCanMake)
+
+	def movesCanMakeQueenDiagonal(self, movesCanMake):
+		"""Gives the diagonal moves the pawn can make if it is a queen."""
+		# Find the grid to test
+		gridToTest = self.getCoordinates()
+
+		# Start by heading in the ++ diagonal
+		while True:
+
+			# Advance the tested square
+			gridToTest = (gridToTest[0] + 1,gridToTest[1] + 1)
+
+			# Make sure the piece is not out of bounds
+			if(gridToTest[0] > 7 or gridToTest[1] > 7):
+				break
+
+			# See if the piece is blocked by any other piece, using a strict test for pieces of the same team and a soft test for enemy pieces
+
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# If the loop is still unbroken, add the current piece
+			movesCanMake.append(gridToTest)
+
+		# Continue in the +- diagonal
+		while True:
+
+			# Reset grid
+			gridToTest = self.getCoordinates()
+
+			# Advance the tested square
+			gridToTest = (gridToTest[0] + 1,gridToTest[1] - 1)
+
+			# Make sure the piece is not out of bounds
+			if(gridToTest[0] > 7 or gridToTest[1] < 0):
+				break
+
+			# See if the piece is blocked by any other piece, using a strict test for pieces of the same team and a soft test for enemy pieces
+
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# If the loop is still unbroken, add the current piece
+			movesCanMake.append(gridToTest)
+
+		# Continue in the -+ diagonal
+		while True:
+
+			# Reset grid
+			gridToTest = self.getCoordinates()
+
+			# Advance the tested square
+			gridToTest = (gridToTest[0] - 1,gridToTest[1] + 1)
+
+			# Make sure the piece is not out of bounds
+			if(gridToTest[0] < 0 or gridToTest[1] > 7):
+				break
+
+			# See if the piece is blocked by any other piece, using a strict test for pieces of the same team and a soft test for enemy pieces
+
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# If the loop is still unbroken, add the current piece
+			movesCanMake.append(gridToTest)
+
+				# Continue in the -- diagonal
+		while True:
+
+			# Reset grid
+			gridToTest = self.getCoordinates()
+
+			# Advance the tested square
+			gridToTest = (gridToTest[0] - 1,gridToTest[1] - 1)
+
+			# Make sure the piece is not out of bounds
+			if(gridToTest[0] < 0 or gridToTest[1] < 0):
+				break
+
+			# See if the piece is blocked by any other piece, using a strict test for pieces of the same team and a soft test for enemy pieces
+
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# If the loop is still unbroken, add the current piece
+			movesCanMake.append(gridToTest)
+
+	def movesCanMakeQueenVertical(self, movesCanMake):
+		"""Gives the moves a pawn can make if it is a queen vertically"""
+
+		gridToTest = self.getCoordinates()
+		# Look for pieces in the +x direction
+		while True:
+			gridToTest = (gridToTest[0] + 1, gridToTest[1])
+			# See if the piece is still in bounds
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
+				break
+
+			# Check for enemy or team pieces
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# Add the square otherwise
+			movesCanMake.append(gridToTest)
+
+		# Do the same for the -x direction
+		# Reset Grid
+		gridToTest = self.getCoordinates()
+		while True:
+			gridToTest = (gridToTest[0] - 1, gridToTest[1])
+			# See if the piece is still in bounds
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
+				break
+
+			# Check for enemy or team pieces
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# Add the square otherwise
+			movesCanMake.append(gridToTest)
+
+		# +y
+		# Reset Grid
+		gridToTest = self.getCoordinates()
+		while True:
+			gridToTest = (gridToTest[0], gridToTest[1] + 1)
+			# See if the piece is still in bounds
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
+				break
+
+			# Check for enemy or team pieces
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# Add the square otherwise
+			movesCanMake.append(gridToTest)
+
+		# -y
+		# Reset Grid
+		gridToTest = self.getCoordinates()
+		while True:
+			gridToTest = (gridToTest[0], gridToTest[1] - 1)
+			# See if the piece is still in bounds
+			if(not((0 <= self.getCoordinates()[1] + self.direction <= 7) and (0 <= self.getCoordinates()[0] + 1 <= 7))):
+				break
+
+			# Check for enemy or team pieces
+			if(gridToTest in self.listOfTeamSquares):
+				break
+
+			if(gridToTest in self.listOfEnemySquares):
+				movesCanMake.append(gridToTest)
+				break
+
+			# Add the square otherwise
+			movesCanMake.append(gridToTest)
+
+	def movesCanMakeQueen(self, movesCanMake):
+		"""Returns all moves a queen-pawn can make. Note - this formulation has since been over ridden and will not be used."""
+		self.movesCanMakeQueenVertical(movesCanMake)
+		self.movesCanMakeQueenDiagonal(movesCanMake)
 
 	def movesCanMake(self, teamPieces, enemyPieces):
 		"""Returns the moves a pawn can make."""
 		# Update the piece
 		self.update(teamPieces, enemyPieces)
 
-		self.movesCanMakeRegular(movesCanMake)
+		# Determine if the pawn is a queen
+		if(self.getCoordinates()[1] == self.queenY):
+			self.queen = True
+			self.imageName = self.color + "Queen.gif"
+
+		# Decide how to move the pawn
+		movesCanMake = []
+
+		# Move as a pawn or queen
+		if(self.queen):
+			self.movesCanMakeQueen(movesCanMake)
+		else:
+			self.movesCanMakeRegular(movesCanMake)
 
 		return(movesCanMake)
