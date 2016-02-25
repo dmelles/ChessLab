@@ -99,7 +99,7 @@ class Piece:
 		"""sets y."""
 		self.y = y
 
-	def type(self):
+	def getType(self):
 		"""Returns the type of the piece."""
 		return self.type
 
