@@ -5,7 +5,6 @@
 from ChessGUI import *
 from MellesPieces import *
 from RamachandranPieces import *
-import pdb
 
 class ChessRunner:
 
@@ -22,54 +21,49 @@ class ChessRunner:
 
         self.currentTeam = self.whitePieces
 
+        checkmate = False
+
         while True:
-            if self.currentTeam == self.whitePieces:
-                self.otherTeam = self.blackPieces
-            else:
-                self.otherTeam = self.whitePieces
+            if not checkmate:
+                if self.currentTeam == self.whitePieces:
+                    self.gui.printMessage("White's turn")
+                    self.otherTeam = self.blackPieces
+                else:
+                    self.gui.printMessage("Black's turn")
+                    self.otherTeam = self.whitePieces
             hasMoved = False
             
             while not hasMoved:
                 square = self.gui.getInput()
                 if self.pieceOnSquare(self.currentTeam,square):
                     piece = self.pieceOnSquare(self.currentTeam,square)
-                    for move in piece.movesCanMake(self.currentTeam,self.otherTeam):
+                    for move in self.movesCanMakeWithCheck(piece):
                         self.gui.highlightSelectedSquare(move)
                     square = self.gui.getInput()
-                    if square in piece.movesCanMake(self.currentTeam,self.otherTeam):
+                    if square in self.movesCanMakeWithCheck(piece):
                         previousCoords = piece.getCoordinates()
                         piece.setCoordinates(square)
                         hasMoved = True
-                        king = self.currentTeam[0]
+                        piece.draw(self.gui)
+                        
+
+                        self.gui.unHighlightAllSquares()
                         pieceToRemove = False
                         
                         for otherPiece in self.otherTeam:
                             if piece.getCoordinates() == otherPiece.getCoordinates():
                                 pieceToRemove = otherPiece
-                        
-                        if pieceToRemove:
-                            otherTeamClone = []
-                            for otherPiece in self.otherTeam:
-                                if otherPiece != pieceToRemove:
-                                    otherTeamClone.append(otherPiece)
-                        else:
-                            otherTeamClone = self.otherTeam
-                        
-                        if king.isInCheck(self.currentTeam,otherTeamClone):
-                            piece.setCoordinates(previousCoords)
-                            hasMoved = False
-                            self.gui.printMessage("You cannot put yourself in check")
-                        piece.draw(self.gui)
-                        self.gui.unHighlightAllSquares()
-                        
+                                
                         if pieceToRemove and hasMoved:
                             self.otherTeam.remove(pieceToRemove)
                             pieceToRemove.kill()
+
+                        self.checkForPawnToQueen(piece)
                     else:
                         self.gui.unHighlightAllSquares()
                 else:
                     self.gui.unHighlightAllSquares()
-                self.gui.printMessage("")
+                self.gui.clearMessage()
                 king = self.otherTeam[0]
                 if king.isInCheck(self.otherTeam,self.currentTeam):
                     if self.otherTeam == self.whitePieces:
@@ -77,15 +71,36 @@ class ChessRunner:
                     else:
                         teamString = 'Black'
                     if self.otherTeamIsInCheckmate():
-                        self.gui.printMessage(teamString+" is in checkmate")
+                        self.gui.printMessage("Checkmate! {0} loses".format(teamString))
+                        checkmate = True
                     else:                 
                        self.gui.printMessage(teamString+' king is in check.')
                 else:
-                    self.gui.printMessage("")
+                    self.gui.clearMessage()
             if self.currentTeam == self.whitePieces:
                 self.currentTeam = self.blackPieces
             else:
                 self.currentTeam = self.whitePieces
+
+    def checkForPawnToQueen(self,piece):
+        if self.currentTeam == self.whitePieces:
+            if piece.getY() == 0 and piece.getType() == 'Pawn':
+                self.currentTeam.remove(piece)
+                queen = Queen('white')
+                queen.setCoordinates(piece.getCoordinates())
+                queen.draw(self.gui)
+                self.currentTeam.append(queen)
+                piece.kill()
+        else:
+            if piece.getY() == 7 and piece.getType() == 'Pawn':
+                self.currentTeam.remove(piece)
+                queen = Queen('black')
+                queen.setCoordinates(piece.getCoordinates())
+                queen.draw(self.gui)
+                self.currentTeam.append(queen)
+                piece.kill()
+
+    
 
     def otherTeamIsInCheckmate(self):
         king = self.otherTeam[0]
@@ -111,6 +126,36 @@ class ChessRunner:
                     return False
                 piece.setCoordinates(previousCoordinates)
         return True
+    def movesCanMakeWithCheck(self,piece):
+        #Putting this in ChessRunner because otherwise we would have to modify all the current movesCanMake methods
+        movesCanMake = []
+        for move in piece.movesCanMake(self.currentTeam,self.otherTeam):
+            previousCoordinates = piece.getCoordinates()
+            piece.setCoordinates(move)
+
+            king = self.currentTeam[0]
+            pieceToRemove = False
+            
+            for otherPiece in self.otherTeam:
+                if piece.getCoordinates() == otherPiece.getCoordinates():
+                    pieceToRemove = otherPiece
+            
+            if pieceToRemove:
+                otherTeamClone = []
+                for otherPiece in self.otherTeam:
+                    if otherPiece != pieceToRemove:
+                        otherTeamClone.append(otherPiece)
+            else:
+                otherTeamClone = self.otherTeam
+
+            #If move wouldn't put king in check, it's a valid move            
+            if not king.isInCheck(self.currentTeam,otherTeamClone):
+                movesCanMake.append(move)
+            piece.setCoordinates(previousCoordinates)
+        return movesCanMake
+                
+
+            
         
     def createPieces(self):
         self.whitePieces = []
