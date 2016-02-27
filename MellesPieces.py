@@ -95,11 +95,11 @@ class Queen(Piece):
                     else:
                         if abs(self.x-piece.getX()) <= abs(self.x-maxAxials[3][0]):
                             maxAxials[3] = (piece.getX()+1,piece.getY())                    
-                    
+        #Definitely repeated code, could be more modular, will make it so if I have more time                   
         for piece in enemyPieces:
-            diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
             if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
-                if abs(piece.getX()-self.x) < maxDiagonals[diagonal][0]:
+                diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
+                if abs(piece.getX()-self.x) < abs(maxDiagonals[diagonal][0]-self.x):
                     blockingPieces[diagonal] = piece
                     maxDiagonals[diagonal] = (piece.getX(),piece.getY())
 

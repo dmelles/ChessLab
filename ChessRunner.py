@@ -9,96 +9,126 @@ from RamachandranPieces import *
 class ChessRunner:
 
     def __init__(self):
-        pass
-    def runTurn(self):
-        pass
-    
-    def main(self):
         self.gui = ChessGUI()
         self.createPieces()
+        self.checkmate = False
+    def runTurn(self):
+        pass
+
+    def reset(self):
+        #Resets pieces lists
+        self.createPieces()
+        
+        
+    
+    def main(self):
+        
         for piece in self.whitePieces+self.blackPieces:
             piece.drawPiece(self.gui)
 
         self.currentTeam = self.whitePieces
 
-        checkmate = False
-
+        whiteInCheck = False
+        blackInCheck = False
+        
         while True:
-            if not checkmate:
+            if self.checkmate:
+                self.gui.getInput()
+            else:
                 if self.currentTeam == self.whitePieces:
-                    self.gui.printMessage("White's turn")
+                    if not whiteInCheck:
+                       self.gui.printMessage("White's turn")
                     self.otherTeam = self.blackPieces
                 else:
-                    self.gui.printMessage("Black's turn")
+                    if not blackInCheck:
+                        self.gui.printMessage("Black's turn")
                     self.otherTeam = self.whitePieces
-            hasMoved = False
+                hasMoved = False
             
-            while not hasMoved:
-                square = self.gui.getInput()
-                if self.pieceOnSquare(self.currentTeam,square):
-                    piece = self.pieceOnSquare(self.currentTeam,square)
-                    for move in self.movesCanMakeWithCheck(piece):
-                        self.gui.highlightSelectedSquare(move)
+                while not hasMoved:
                     square = self.gui.getInput()
-                    if square in self.movesCanMakeWithCheck(piece):
-                        previousCoords = piece.getCoordinates()
-                        piece.setCoordinates(square)
-                        hasMoved = True
-                        piece.draw(self.gui)
-                        
+                    if self.pieceOnSquare(self.currentTeam,square):
+                        piece = self.pieceOnSquare(self.currentTeam,square)
+                        for move in self.movesCanMakeWithCheck(piece):
+                            self.gui.highlightSelectedSquare(move)
+                        square = self.gui.getInput()
+                        if square in self.movesCanMakeWithCheck(piece):
+                            piece.setCoordinates(square)
+                            hasMoved = True
+                            piece.draw(self.gui)
+                            
 
-                        self.gui.unHighlightAllSquares()
-                        pieceToRemove = False
-                        
-                        for otherPiece in self.otherTeam:
-                            if piece.getCoordinates() == otherPiece.getCoordinates():
-                                pieceToRemove = otherPiece
-                                
-                        if pieceToRemove and hasMoved:
-                            self.otherTeam.remove(pieceToRemove)
-                            pieceToRemove.kill()
-
-                        self.checkForPawnToQueen(piece)
+                            self.gui.unHighlightAllSquares()
+                            pieceToRemove = False
+                            
+                            for otherPiece in self.otherTeam:
+                                if piece.getCoordinates() == otherPiece.getCoordinates():
+                                    pieceToRemove = otherPiece
+                                    
+                            if pieceToRemove and hasMoved:
+                                self.otherTeam.remove(pieceToRemove)
+                                pieceToRemove.kill()
+                            
+                            self.checkForPawnToQueen(piece)
+                        else:
+                            self.gui.unHighlightAllSquares()
                     else:
                         self.gui.unHighlightAllSquares()
-                else:
-                    self.gui.unHighlightAllSquares()
-                self.gui.clearMessage()
-                king = self.otherTeam[0]
-                if king.isInCheck(self.otherTeam,self.currentTeam):
-                    if self.otherTeam == self.whitePieces:
-                        teamString = 'White'
-                    else:
-                        teamString = 'Black'
-                    if self.otherTeamIsInCheckmate():
-                        self.gui.printMessage("Checkmate! {0} loses".format(teamString))
-                        checkmate = True
-                    else:                 
-                       self.gui.printMessage(teamString+' king is in check.')
-                else:
                     self.gui.clearMessage()
-            if self.currentTeam == self.whitePieces:
-                self.currentTeam = self.blackPieces
-            else:
-                self.currentTeam = self.whitePieces
+                    king = self.otherTeam[0]
+                    if king.isInCheck(self.otherTeam,self.currentTeam):
+                        if self.otherTeam == self.whitePieces:
+                            teamString = 'White'
+                        else:
+                            teamString = 'Black'
+                        if self.otherTeamIsInCheckmate():
+                            self.gui.printMessage("Checkmate! {0} loses".format(teamString))
+                            self.checkmate = True
+                        else:
+                            if teamString == 'White':
+                                whiteInCheck = True
+                            else:
+                                blackInCheck = True
+                            self.gui.printMessage(teamString+' king is in check.')
+                    else:
+                        self.gui.clearMessage()
+                        whiteInCheck = False
+                        blackInCheck = False
+                if self.currentTeam == self.whitePieces:
+                    self.currentTeam = self.blackPieces
+                else:
+                    self.currentTeam = self.whitePieces
 
     def checkForPawnToQueen(self,piece):
+        
         if self.currentTeam == self.whitePieces:
             if piece.getY() == 0 and piece.getType() == 'Pawn':
-                self.currentTeam.remove(piece)
                 queen = Queen('white')
                 queen.setCoordinates(piece.getCoordinates())
                 queen.draw(self.gui)
+                for testPiece in self.currentTeam:
+                    print(testPiece.getType())
+                print("")
                 self.currentTeam.append(queen)
                 piece.kill()
+                self.currentTeam.remove(piece)
+                for testPiece in self.currentTeam:
+                    print(testPiece.getType())
+                print("")
         else:
             if piece.getY() == 7 and piece.getType() == 'Pawn':
-                self.currentTeam.remove(piece)
                 queen = Queen('black')
                 queen.setCoordinates(piece.getCoordinates())
                 queen.draw(self.gui)
+                for testPiece in self.currentTeam:
+                    print(testPiece.getType())
+                print("")
                 self.currentTeam.append(queen)
                 piece.kill()
+                self.currentTeam.remove(piece)
+                for testPiece in self.currentTeam:
+                    print(testPiece.getType())
+                print("")
 
     
 
@@ -126,6 +156,8 @@ class ChessRunner:
                     return False
                 piece.setCoordinates(previousCoordinates)
         return True
+
+
     def movesCanMakeWithCheck(self,piece):
         #Putting this in ChessRunner because otherwise we would have to modify all the current movesCanMake methods
         movesCanMake = []
@@ -191,6 +223,8 @@ class ChessRunner:
 
     def closeWindow(self):
         self.gui.closeWindow()
+
+        
 
 runner = ChessRunner()
 try:
