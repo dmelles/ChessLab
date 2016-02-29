@@ -33,12 +33,28 @@ class King(Piece):
             if (piece.getX(),piece.getY()) in possibleMoves:
                 possibleMoves.remove((piece.getX(),piece.getY()))
         return possibleMoves
+
+    def castleMoves(self,samePieces,enemyPieces):
+        if self.hasMoved or self.isInCheck(samePieces,enemyPieces):
+            return []
+        castleRooks = []
+        for piece in samePieces:
+            if piece.getType() == 'Rook' and not piece.hasMoved():
+                rooks.append(piece)
+        
+        
+        
+        
     
     def isInCheck(self,samePieces,enemyPieces):
         for piece in enemyPieces:
             if (self.x,self.y) in piece.movesCanMake(enemyPieces,samePieces):
                 return True
         return False
+
+    def setCoordinates(self,coordinates):
+        super(King,self).setCoordinates(coordinates)
+        
 
 
 class Queen(Piece):

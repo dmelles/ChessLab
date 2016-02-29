@@ -135,6 +135,7 @@ class ChessRunner:
     def otherTeamIsInCheckmate(self):
         king = self.otherTeam[0]
         #This method is not efficient but it is thorough
+        totalMoves = []
         for piece in self.otherTeam:
             for move in piece.movesCanMake(self.otherTeam,self.currentTeam):
                 previousCoordinates = piece.getCoordinates()
