@@ -91,6 +91,9 @@ class ChessGUI:
 		self.borderLine3.setFill(self.lineColor)
 		self.borderLine4.setFill(self.lineColor)
 
+		# Create a list of highlighted squares to reduce lag
+		self.highlightedSquares = []
+
 	def getSquare(self, requestedSquare):
 		"""Returns the square requested by the format of either[letter,number] or [number,number]. Works with Tuples too."""
 
@@ -159,7 +162,10 @@ class ChessGUI:
 
 	def highlightSelectedSquare(self, requestedSquare):
 		"""Highlights the square at a given coordinate."""
-		self.getSquare(requestedSquare).highlight()
+		# Add the square to highlighted squares and highlight it
+		squareToHighlight = self.getSquare(requestedSquare)
+		self.highlightedSquares.append(squareToHighlight)
+		squareToHighlight.highlight()
 
 	def unHighlightSelectedSquare(self, requestedSquare):
 		"""Unhighlights the square at a given coordinate."""
@@ -167,9 +173,9 @@ class ChessGUI:
 
 	def unHighlightAllSquares(self):
 		"""Unhighlights all squares."""
-		for squareList in self.listOfSquares:
-			for square in squareList:
-				square.unHighlight()
+		# Use selected squares to reduce lag
+		for square in self.highlightedSquares:
+			square.unHighlight()
 
 	def clearMessage(self):
 		"""Clears the message being displayed."""

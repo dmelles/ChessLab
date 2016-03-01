@@ -112,3 +112,7 @@ class Piece:
 		"""Confirms that a piece has moved and draws it in the GUI."""
 		self.hasMoved = True
 		self.drawPiece(gui)
+
+	def moved(self):
+		"""Determines whether or not the piece has moved."""
+		return self.hasMoved
