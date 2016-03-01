@@ -53,10 +53,21 @@ class ChessRunner:
                             self.gui.highlightSelectedSquare(move)
                         square = self.gui.getInput()
                         if square in self.movesCanMakeWithCheck(piece):
+                            if piece.getType() == 'King':
+                                if square in piece.castleMoves(self.currentTeam,self.otherTeam):
+                                    if square[0] < piece.getX():
+                                        leftRook = piece.getRookLeft(self.currentTeam)
+                                        leftRook.setCoordinates((3,leftRook.getY()))
+                                        leftRook.draw(self.gui)
+                                    else:
+                                        rightRook = piece.getRookRight(self.currentTeam)
+                                        rightRook.setCoordinates((5,rightRook.getY()))
+                                        rightRook.draw(self.gui)
+                                    
                             piece.setCoordinates(square)
                             hasMoved = True
                             piece.draw(self.gui)
-                            
+
 
                             self.gui.unHighlightAllSquares()
                             pieceToRemove = False
@@ -106,30 +117,17 @@ class ChessRunner:
                 queen = Queen('white')
                 queen.setCoordinates(piece.getCoordinates())
                 queen.draw(self.gui)
-                for testPiece in self.currentTeam:
-                    print(testPiece.getType())
-                print("")
                 self.currentTeam.append(queen)
                 piece.kill()
                 self.currentTeam.remove(piece)
-                for testPiece in self.currentTeam:
-                    print(testPiece.getType())
-                print("")
         else:
             if piece.getY() == 7 and piece.getType() == 'Pawn':
                 queen = Queen('black')
                 queen.setCoordinates(piece.getCoordinates())
                 queen.draw(self.gui)
-                for testPiece in self.currentTeam:
-                    print(testPiece.getType())
-                print("")
                 self.currentTeam.append(queen)
                 piece.kill()
                 self.currentTeam.remove(piece)
-                for testPiece in self.currentTeam:
-                    print(testPiece.getType())
-                print("")
-
     
 
     def otherTeamIsInCheckmate(self):
@@ -161,8 +159,12 @@ class ChessRunner:
 
     def movesCanMakeWithCheck(self,piece):
         #Putting this in ChessRunner because otherwise we would have to modify all the current movesCanMake methods
-        movesCanMake = []
-        for move in piece.movesCanMake(self.currentTeam,self.otherTeam):
+        movesCanMakeWithCheck = []
+        movesCanMake = piece.movesCanMake(self.currentTeam,self.otherTeam)
+        if piece.getType() == 'King':
+            movesCanMake += piece.castleMoves(self.currentTeam,self.otherTeam)
+            
+        for move in movesCanMake:
             previousCoordinates = piece.getCoordinates()
             piece.setCoordinates(move)
 
@@ -183,9 +185,9 @@ class ChessRunner:
 
             #If move wouldn't put king in check, it's a valid move            
             if not king.isInCheck(self.currentTeam,otherTeamClone):
-                movesCanMake.append(move)
+                movesCanMakeWithCheck.append(move)
             piece.setCoordinates(previousCoordinates)
-        return movesCanMake
+        return movesCanMakeWithCheck
                 
 
             

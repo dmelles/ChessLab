@@ -37,23 +37,79 @@ class King(Piece):
     def castleMoves(self,samePieces,enemyPieces):
         if self.hasMoved or self.isInCheck(samePieces,enemyPieces):
             return []
+        
         castleRooks = []
+        castleMoves = []
+        canCastle = [True,True]
+        for piece in samePieces+enemyPieces:
+            if piece.getY() == self.y and not piece.getType() == 'Rook':
+                if piece.getX() < self.x:
+                    canCastle[0] = False
+                elif piece.getX() > self.x:
+                    canCastle[1] = False
+
+        leftRook = self.getRookLeft(samePieces)
+        rightRook = self.getRookRight(samePieces)
+                    
+        if leftRook:
+            if leftRook.moved():
+                canCastle[0] = False
+        else:
+            canCastle[0] = False
+        if rightRook:
+            if rightRook.moved():
+                canCastle[1] = False
+        else:
+            canCastle[1] = False
+
+        previousCoordinates = self.getCoordinates()
+        self.setX(self.x-1)
+        
+        if self.isInCheck(samePieces,enemyPieces):
+            canCastle[0] = False
+        self.setCoordinates(previousCoordinates)
+        
+        self.setX(self.x+1)
+        if self.isInCheck(samePieces,enemyPieces):
+            canCastle[1] = False
+        self.setCoordinates(previousCoordinates)
+        
+        if canCastle[0]:
+            castleMoves.append((self.x-2,self.y))
+        if canCastle[1]:
+            castleMoves.append((self.x+2,self.y))
+
+
+        return castleMoves
+
+
+    def getRookLeft(self,samePieces):
+        rooks = []
         for piece in samePieces:
-            if piece.getType() == 'Rook' and not piece.hasMoved():
+            if piece.getType() == 'Rook':
                 rooks.append(piece)
+        if len(rooks) == 1 and rooks[0].getX() > self.x or len(rooks) == 0:
+            return False
+        return rooks[0]
+
+    def getRookRight(self,samePieces):
+        rooks = []
+        for piece in samePieces:
+            if piece.getType() == 'Rook':
+                rooks.append(piece)
+        if len(rooks) == 1 and rooks[0].getX() < self.x or len(rooks) == 0:
+            return False
+        elif len(rooks) == 1 and rooks[0].getX() > self.x:
+            return rooks[0]
+        return rooks[1]
         
         
-        
-        
-    
+            
     def isInCheck(self,samePieces,enemyPieces):
         for piece in enemyPieces:
             if (self.x,self.y) in piece.movesCanMake(enemyPieces,samePieces):
                 return True
         return False
-
-    def setCoordinates(self,coordinates):
-        super(King,self).setCoordinates(coordinates)
         
 
 
