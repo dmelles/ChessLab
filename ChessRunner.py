@@ -17,7 +17,13 @@ class ChessRunner:
 
     def reset(self):
         #Resets pieces lists
+        self.gui.reset("")
+        for piece in self.whitePieces+self.blackPieces:
+            piece.kill()
+            
         self.createPieces()
+        for piece in self.whitePieces+self.blackPieces:
+            piece.drawPiece(self.gui)
         
         
     
@@ -33,7 +39,7 @@ class ChessRunner:
         
         while True:
             if self.checkmate:
-                self.gui.getInput()
+                self.reset()
             else:
                 if self.currentTeam == self.whitePieces:
                     if not whiteInCheck:
@@ -85,7 +91,6 @@ class ChessRunner:
                             self.gui.unHighlightAllSquares()
                     else:
                         self.gui.unHighlightAllSquares()
-                    self.gui.clearMessage()
                     king = self.otherTeam[0]
                     if king.isInCheck(self.otherTeam,self.currentTeam):
                         if self.otherTeam == self.whitePieces:
@@ -102,7 +107,6 @@ class ChessRunner:
                                 blackInCheck = True
                             self.gui.printMessage(teamString+' king is in check.')
                     else:
-                        self.gui.clearMessage()
                         whiteInCheck = False
                         blackInCheck = False
                 if self.currentTeam == self.whitePieces:
@@ -227,10 +231,17 @@ class ChessRunner:
     def closeWindow(self):
         self.gui.closeWindow()
 
+    def printMoveMessage(piecesInvolvedInMove):
+        #To map number coordinates to chess coordinates
+        #If piece was taken
+        pass
+        
+
         
 
 runner = ChessRunner()
 try:
     runner.main()
 except NotImplementedError:
+    #Quit logic
     runner.closeWindow()
