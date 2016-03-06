@@ -40,7 +40,10 @@ class ChessGUI:
 
 		# Creating the interaction options
 
-		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 2), "")
+		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 4), "")
+		self.messageBox.draw(self.window)
+
+		self. moveBox = Text(Point(self.width * 5 / 6, self.height * 1 / 4), "")
 		self.messageBox.draw(self.window)
 
 		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 70, 40, "Quit", "CadetBlue1")
@@ -152,7 +155,7 @@ class ChessGUI:
 	def printMessage(self, Message):
 		"""Prints a message on screen."""
 		# Make sure the message ends in a period
-		if(Message[-1] != "." or Message[-1] != "!"):
+		if(Message[-1] != "." and Message[-1] != "!"):
 			Message += "."
 		self.messageBox.setText(Message)
 
@@ -180,6 +183,18 @@ class ChessGUI:
 	def clearMessage(self):
 		"""Clears the message being displayed."""
 		self.messageBox.setText("")
+
+	def printMoves(self, message):
+		"""Prints the move message on screen."""
+		# Add a period to the end if needed
+		if(message[-1] != "."):
+			message += "."
+		# Print the message
+		self.moveBox.setText(message)
+
+	def clearMoves(self):
+		"""Clears the move message."""
+		self.moveBox.setText("")
 
 	def closeWindow(self):
 		"""Closes the window."""
