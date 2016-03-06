@@ -185,10 +185,9 @@ class ChessGUI:
 		"""Closes the window."""
 		self.window.close()
 
-	def reset(self, resetMessage):
+	def reset(self):
 		"""Resets the GUI window for a new game."""
 		# Wait for the reset button to be clicked
-		self.messageBox.setText(resetMessage)
 		self.resetButton.activate()
 		while True:
 			clickPoint = self.window.getMouse()
