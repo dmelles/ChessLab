@@ -17,13 +17,15 @@ class ChessRunner:
 
     def reset(self):
         #Resets pieces lists
-        self.gui.reset("")
+        self.gui.reset()
         for piece in self.whitePieces+self.blackPieces:
             piece.kill()
             
         self.createPieces()
         for piece in self.whitePieces+self.blackPieces:
             piece.drawPiece(self.gui)
+        self.checkmate = False
+        self.currentTeam = self.whitePieces
         
         
     
