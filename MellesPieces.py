@@ -141,7 +141,6 @@ class Queen(Piece):
             downLeftWall = (self.x-(7-self.y),7)
         #In order of up/left, up/right,down/right,down/left aka clockwise
         maxDiagonals = [upLeftWall,upRightWall,downRightWall,downLeftWall]
-        print("First max diagonals:",maxDiagonals,self.getCoordinates())
         #In order of up, right, down, left
         maxAxials = [(self.x,0),(7,self.y),(self.x,7),(0,self.y)]
         blockingPieces = [False,False,False,False]
@@ -150,9 +149,6 @@ class Queen(Piece):
                 if abs(piece.getX()-self.x) == abs(piece.getY()-self.y):
                     diagonal,xDirection,yDirection = self.onWhichDiagonal(piece)
                     if abs(piece.getX()-self.x) <= abs(maxDiagonals[diagonal][0]-self.x):
-                        #debug statement, to be removed
-##                        if self.getCoordinates() == (1,5):
-##                            pdb.set_trace()
                         blockingPieces[diagonal] = piece
                         maxDiagonals[diagonal] = (piece.getX()-xDirection,piece.getY()-yDirection)
 
@@ -219,10 +215,6 @@ class Queen(Piece):
                 for i in range(1,abs(self.x-maxAxials[axialIndex][0])+1):
                     movesCanMake.append((self.x+i*direction[0],self.y))
             axialIndex += 1
-        if self.imageName[0] == "w":
-            print("")
-            print(maxDiagonals)
-            print(blockingPieces)
         return movesCanMake
 
     #Returns an index in maxDiagonals^
