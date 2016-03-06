@@ -44,7 +44,7 @@ class ChessGUI:
 		self.messageBox.draw(self.window)
 
 		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 60, 40, "Quit", "CadetBlue1")
-		self.resetButton = Button(self.window, Point(self.width * 5 / 6, self.height * 5 / 6), 60, 40, "Quit", "CadetBlue1")
+		self.resetButton = Button(self.window, Point(self.width * 5 / 6, self.height * 5 / 6), 60, 40, "New Game!", "CadetBlue1")
 
 		self.quitButton.activate()
 
