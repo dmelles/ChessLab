@@ -61,21 +61,27 @@ class ChessRunner:
                             self.gui.highlightSelectedSquare(move)
                         square = self.gui.getInput()
                         if square in self.movesCanMakeWithCheck(piece):
+
+                            piecesInvolvedInMove = [piece]
+                            
+                            isCastleMove = False
                             if piece.getType() == 'King':
                                 if square in piece.castleMoves(self.currentTeam,self.otherTeam):
+                                    isCastleMove = True
                                     if square[0] < piece.getX():
                                         leftRook = piece.getRookLeft(self.currentTeam)
                                         leftRook.setCoordinates((3,leftRook.getY()))
                                         leftRook.draw(self.gui)
+                                        piecesInvolvedInMove.append(leftRook)
                                     else:
                                         rightRook = piece.getRookRight(self.currentTeam)
                                         rightRook.setCoordinates((5,rightRook.getY()))
                                         rightRook.draw(self.gui)
-                                    
+                                        piecesInvolvedInMove.append(rightRook)
+                            
                             piece.setCoordinates(square)
                             hasMoved = True
                             piece.draw(self.gui)
-
 
                             self.gui.unHighlightAllSquares()
                             pieceToRemove = False
@@ -84,10 +90,12 @@ class ChessRunner:
                                 if piece.getCoordinates() == otherPiece.getCoordinates():
                                     pieceToRemove = otherPiece
                                     
+                            
                             if pieceToRemove and hasMoved:
                                 self.otherTeam.remove(pieceToRemove)
                                 pieceToRemove.kill()
-                            
+                                piecesInvolvedInMove.append(pieceToRemove)
+                            self.printMoveMessage(piecesInvolvedInMove,isCastleMove)
                             self.checkForPawnToQueen(piece)
                         else:
                             self.gui.unHighlightAllSquares()
@@ -95,10 +103,7 @@ class ChessRunner:
                         self.gui.unHighlightAllSquares()
                     king = self.otherTeam[0]
                     if king.isInCheck(self.otherTeam,self.currentTeam):
-                        if self.otherTeam == self.whitePieces:
-                            teamString = 'White'
-                        else:
-                            teamString = 'Black'
+                        teamString = self.getOtherTeamString()
                         if self.otherTeamIsInCheckmate():
                             self.gui.printMessage("Checkmate! {0} loses".format(teamString))
                             self.checkmate = True
@@ -233,10 +238,40 @@ class ChessRunner:
     def closeWindow(self):
         self.gui.closeWindow()
 
-    def printMoveMessage(piecesInvolvedInMove):
+    def getTeamString(self):
+        if self.currentTeam == self.whitePieces:
+            return 'White'
+        else:
+            return 'Black'
+        
+    def getOtherTeamString(self):
+        if self.otherTeam == self.whitePieces:
+            return 'White'
+        else:
+            return 'Black'
+    
+    def printMoveMessage(self,piecesInvolvedInMove,isCastleMove):
         #To map number coordinates to chess coordinates
+        yCoordinates = ['8','7','6','5','4','3','2','1']
+        xCoordinates = ['a','b','c','d','e','f','g','h']
+
+        pieceThatMoved = piecesInvolvedInMove[0]
+
+        if isCastleMove:
+            message = self.getTeamString()+" castled "
+            if piecesInvolvedInMove[1] == pieceThatMoved.getRookLeft(self.currentTeam):
+                message += "queenside"
+            else:
+                message += "kingside"
+        else:
+            message = self.getTeamString()+" "+pieceThatMoved.getType().lower()+" moved to " +\
+                      xCoordinates[pieceThatMoved.getX()]+yCoordinates[pieceThatMoved.getY()]
+            if len(piecesInvolvedInMove) > 1:
+                pieceTaken = piecesInvolvedInMove[1]
+                message += " and took "+self.getOtherTeamString().lower()+" "+pieceTaken.getType().lower()
+        print(message)
         #If piece was taken
-        pass
+        
         
 
         
