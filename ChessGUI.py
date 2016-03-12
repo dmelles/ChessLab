@@ -13,7 +13,7 @@ class ChessGUI:
 		"""Creates a GUI object for use with Chess, complete with Mouse, Square, and Message functionality."""
 
 		# Determining the width and length
-		self.width = 800
+		self.width = 820
 		self.height = 600
 
 		# Create the square colors
@@ -43,7 +43,7 @@ class ChessGUI:
 		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 4), "")
 		self.messageBox.draw(self.window)
 
-		self. moveBox = Text(Point(self.width * 5 / 6, self.height * 1 / 2), "")
+		self. moveBox = Text(Point(self.width * 5 / 6+20, self.height * 1 / 2), "")
 		self.moveBox.draw(self.window)
 
 		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 70, 40, "Quit", "CadetBlue1")

@@ -269,7 +269,7 @@ class ChessRunner:
             if len(piecesInvolvedInMove) > 1:
                 pieceTaken = piecesInvolvedInMove[1]
                 message += " and took "+self.getOtherTeamString().lower()+" "+pieceTaken.getType().lower()
-        print(message)
+        self.gui.printMoves(message)
         #If piece was taken
         
         
