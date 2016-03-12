@@ -13,8 +13,8 @@ class ChessGUI:
 		"""Creates a GUI object for use with Chess, complete with Mouse, Square, and Message functionality."""
 
 		# Determining the width and length
-		self.width = 820
-		self.height = 600
+		self.width = 1000
+		self.height = 700
 
 		# Create the square colors
 		self.darkSquareColor = "deep pink"
@@ -40,14 +40,16 @@ class ChessGUI:
 
 		# Creating the interaction options
 
-		self.messageBox = Text(Point(self.width * 5 / 6, self.height * 1 / 4), "")
+		self.messageBox = Text(Point(self.width * 10 / 12, self.height * 1 / 4), "")
 		self.messageBox.draw(self.window)
+		self.messageBox.setFace("times roman")
 
-		self. moveBox = Text(Point(self.width * 5 / 6+20, self.height * 1 / 2), "")
+		self. moveBox = Text(Point(self.width * 10 / 12, self.height * 1 / 2), "")
 		self.moveBox.draw(self.window)
+		self.moveBox.setFace("times roman")
 
-		self.quitButton = Button(self.window, Point(self.width * 5 / 6, self.height * 2 / 3), 70, 40, "Quit", "CadetBlue1")
-		self.resetButton = Button(self.window, Point(self.width * 5 / 6, self.height * 5 / 6), 70, 40, "New Game!", "CadetBlue1")
+		self.quitButton = Button(self.window, Point(self.width * 10 / 12, self.height * 2 / 3), 70, 40, "Quit", "CadetBlue1")
+		self.resetButton = Button(self.window, Point(self.width * 10 / 12, self.height * 5 / 6), 70, 40, "New Game!", "CadetBlue1")
 
 		self.quitButton.activate()
 
@@ -60,11 +62,11 @@ class ChessGUI:
 		for i in range(8):
 			for j in range(8):
 				if(i % 2 == 0 and j % 2 != 0) or (i % 2 != 0 and j % 2 == 0):
-					self.listOfSquares[i].append(Square(self.darkSquareColor, self.darkSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
+					self.listOfSquares[i].append(Square(self.darkSquareColor, self.darkSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 18, self.boardLength * j / 8 + self.height * 1/18, self.boardLength / 8))
 				else:
-					self.listOfSquares[i].append(Square(self.lightSquareColor, self.lightSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 16, self.boardLength * j / 8 + self.height * 1/16, self.boardLength / 8))
-				labelsY.append(Text(Point(self.width * 1 / 16 + self.boardLength + 15, self.boardLength * j / 8 + self.height * 1/16 + self.boardLength / 16), numbers[7-j]))
-			labelsX.append(Text(Point(self.boardLength * i / 8 + self.width * 1 / 16 + self.boardLength / 16, self.height * 1/16 - 14), alpha[i]))
+					self.listOfSquares[i].append(Square(self.lightSquareColor, self.lightSquareColorHighlighted, self.lineColor, self.boardLength * i / 8 + self.width * 1 / 18, self.boardLength * j / 8 + self.height * 1/18, self.boardLength / 8))
+				labelsY.append(Text(Point(self.width * 1 / 18 + self.boardLength + 15, self.boardLength * j / 8 + self.height * 1/18 + self.boardLength / 16), numbers[7-j]))
+			labelsX.append(Text(Point(self.boardLength * i / 8 + self.width * 1 / 18 + self.boardLength / 16, self.height * 1/18 - 14), alpha[i]))
 
 		# Draw the squares
 		for squareList in self.listOfSquares:
@@ -77,10 +79,10 @@ class ChessGUI:
 			labelsY[i].draw(self.window)
 
 		# Create the border lines
-		self.borderLine1 = Line(Point(self.width * 1 / 16, self.height * 1/16), Point(self.boardLength + self.width * 1 / 16, self.height * 1/16))
-		self.borderLine2 = Line(Point(self.width * 1 / 16, self.height * 1/16), Point(self.width * 1 / 16, self.boardLength + self.height * 1/16))
-		self.borderLine3 = Line(Point(self.boardLength + self.width * 1 / 16, self.height * 1/16), Point(self.boardLength + self.width * 1 / 16, self.boardLength + self.height * 1/16))
-		self.borderLine4 = Line(Point(self.width * 1 / 16, self.boardLength + self.height * 1/16), Point(self.boardLength + self.width * 1 / 16, self.boardLength + self.height * 1/16))
+		self.borderLine1 = Line(Point(self.width * 1 / 18, self.height * 1/18), Point(self.boardLength + self.width * 1 / 18, self.height * 1/18))
+		self.borderLine2 = Line(Point(self.width * 1 / 18, self.height * 1/18), Point(self.width * 1 / 18, self.boardLength + self.height * 1/18))
+		self.borderLine3 = Line(Point(self.boardLength + self.width * 1 / 18, self.height * 1/18), Point(self.boardLength + self.width * 1 / 18, self.boardLength + self.height * 1/18))
+		self.borderLine4 = Line(Point(self.width * 1 / 18, self.boardLength + self.height * 1/18), Point(self.boardLength + self.width * 1 / 18, self.boardLength + self.height * 1/18))
 
 		# Draw the border lines
 		self.borderLine1.draw(self.window)

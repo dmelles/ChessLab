@@ -23,6 +23,7 @@ class Button:
 		self.rect.setFill("linen")
 		self.rect.draw(win)
 		self.label = Text(center, label)
+		self.label.setFace("times roman")
 		self.label.draw(win)
 		self.deactivate()
 	def clicked(self, p):
