@@ -18,19 +18,19 @@ class ChessGUI:
 
 		# Create the square colors
 		self.darkSquareColor = "LightSteelBlue1"
-		self.darkSquareColorHighlighted = "RoyalBlue1"
+		self.darkSquareColorHighlighted = "blue2"
 
 		self.lightSquareColor = "MistyRose2"
-		self.lightSquareColorHighlighted = "coral1"
+		self.lightSquareColorHighlighted = "maroon1"
 
 		# Create the line color
-		self.lineColor = "seashell4"
+		self.lineColor = "black"
 
 		# Creating the graphics window
 		self.window = GraphWin("Chess!!!", self.width, self.height)
 
 		# Creating the background color
-		self.background = "aquamarine"
+		self.background = "honeydew2"
 
 		# Filling in the background color
 		self.window.setBackground(self.background)
@@ -181,6 +181,7 @@ class ChessGUI:
 		# Use selected squares to reduce lag
 		for square in self.highlightedSquares:
 			square.unHighlight()
+		self.highlightedSquares = []
 
 	def clearMessage(self):
 		"""Clears the message being displayed."""
