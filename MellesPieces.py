@@ -32,6 +32,7 @@ class King(Piece):
         for piece in samePieces:
             if (piece.getX(),piece.getY()) in possibleMoves:
                 possibleMoves.remove((piece.getX(),piece.getY()))
+
         return possibleMoves
 
     def castleMoves(self,samePieces,enemyPieces):
